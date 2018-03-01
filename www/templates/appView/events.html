@@ -1,0 +1,70 @@
+<ion-view class="pane" view-title="Contact">
+    <div class="inner-page contact">
+        <header>
+            <div class="container">
+                <div class="side-menu">
+                    <a href="#">
+                        <img src="img/menu.png">
+                    </a>
+                    <div class="left-side-menu" style="display:none;">
+                        <div class="side-menu-content">
+                            <div class="menu-blk">
+                                <h2>Menu</h2>
+                                <a href="#" class="togg">X</a>
+                            </div>
+                            <ul class="menu-item">
+                                <li class="menu-1 active">
+                                    <a href="#">Home</a>
+                                </li>
+                                <li class="menu-2">
+                                    <a href="#">EVENEMENTEN</a>
+                                </li>
+                                <li class="menu-3">
+                                    <a href="#">Categorieen</a>
+                                </li>
+                                <li class="menu-4">
+                                    <a href="#">informatie</a>
+                                </li>
+                                <li class="menu-5">
+                                    <a href="#">Push berichten</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-title">
+                    <h1>Events</h1>
+                </div>
+                <div class="next-page">
+                    <button id="back" value="" type="button"></button>
+                </div>
+            </div>
+        </header>
+        <ion-content>
+            <div class="main-content">
+                <div class="contact common-cls">                    
+                    <div class="contact-add">
+                        <div class="container">
+                            
+                        </div>
+                    </div>
+                    <div>
+                        <label>Name</label>
+                    </div>
+                    <div>
+                        <input type="text" name="name" ng-model="contact.name">
+                    </div>
+
+                    <div>
+                        <button type="submit" class="btn btn-info" value="Submit" ng-click="getCompletedEvents();">
+                        <button type="submit" class="btn btn-warning" value="Submit" ng-click="getUpcomingEvents();">
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </ion-content>
+    </div>
+</ion-view>

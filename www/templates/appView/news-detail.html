@@ -1,0 +1,90 @@
+<ion-view class="pane" view-title="News detail">
+    <div class="inner-page news-detail">
+        <header>
+            <div class="container">
+                <div class="side-menu">
+                    <a href="#">
+                        <img src="img/menu.png">
+                    </a>
+                    <div class="left-side-menu" style="display:none;">
+                        <div class="side-menu-content">
+                            <div class="menu-blk">
+                                <h2>Menu</h2>
+                                <a href="#" class="togg">X</a>
+                            </div>
+                            <ul class="menu-item">
+                                <li class="menu-1 active">
+                                    <a href="#">Home</a>
+                                </li>
+                                <li class="menu-2">
+                                    <a href="#">EVENEMENTEN</a>
+                                </li>
+                                <li class="menu-3">
+                                    <a href="#">Categorieen</a>
+                                </li>
+                                <li class="menu-4">
+                                    <a href="#">informatie</a>
+                                </li>
+                                <li class="menu-5">
+                                    <a href="#">Push berichten</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-title">
+                    <h1>NIEUWS detail</h1>
+                </div>
+                <div class="next-page">
+                    <button id="back" value="" type="button"></button>
+                </div>
+            </div>
+        </header>
+        <ion-content>
+            <div class="main-content">
+                <div class="news-detail common-cls">
+                    <div class="container" ng-repeat="newsDetail in newsDetails_values">                        
+                            <div class="news-det-img">
+                                <img ng-src="{{adminimage}}{{newsDetail.image}}">
+                                <div class="news-det-content">
+                                    <h2>{{newsDetail.title}}}</h2>
+                                    <p class="time">VANDAAG,
+                                        <span>{{newsDetail.news_date}} uur</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <p ng-bind-html="newsDetail.description"></p>
+                            <!-- <h4>Donec convallis pellentesque sapien venenatis </h4>
+                            <p>Nunc interdum, risus alesuada convallis, massa purus sollicitudin dolor, nec tincidunt justo
+                                nisi eu orci. Donec pretium gravida diam sed ultricies. Duis lacus nisi, vulputate non neque,
+                                varius egestas massa. Suspendisse potenti. Vivamus imperdiet libero vel dignissim dignissim.
+                                Nulla et mollis nisl. Integer iaculis eque pharetra pellentesque in nec arcu.</p>
+                            <p>Phasellus molestie enim vitae lorem pulvinar, non efficitur ipsum elementum. Etiam imperdiet
+                                condimentum ullamcorper. Fusce imperdiet est ipsum, dapibus mollis nisl ultrices hendrerit.
+                                </p>
+                            <h4>Vivamus imperdiet libero vel dignissim dignissim.</h4>
+                            <p>Nulla et mollis nisl. Integer iaculis urna ut neque pharetra pellentesque in nec arcu. Nunc ut
+                                sollicitudin est, vitae viverra leo. Sed convallis ultricies eleifend. Phasellus lobortis
+                                erat odio, nec mattis neque facilisis vitae. Aenean ut tellus eget urna placerat aliquet
+                                et id velit. Pellentesque et nunc et nibh aliquet dignissim imperdiet eget odio. Maecenas
+                                tempor nibh tortor, et pellentesque libero vehicula quis. Nulla venenatis aliquam diam vitae
+                                ornare.</p>
+                            <h4>Pellentesque nec tortor vel magna posuere sagittis</h4>
+                            <p>Sed eu ullamcorper erat. Aenean auctor bibendum ipsum, a rutrum ex tempor ultricies. Sed maximus
+                                accumsan orci non viverra. Etiam est mauris, convallis ut tristique vitae, faucibus ac ante.
+                                Integer quis aliquet ante. Nam tincidunt accumsan justo, nec tempus dui suscipit vitae. Aliquam
+                                vel feugiat diam. Phasellus dui risus, faucibus id leo id, accumsan vestibulum est. Praesent
+                                dui quam, lacinia sit amet sem at, dapibus ornare tortor. Quisque eu massa ut velit tincidunt
+                                tempor. </p>
+                            <p>Sed eu ullamcorper erat. Aenean auctor bibendum ipsum, a rutrum ex tempor ultricies. Sed maximus
+                                accumsan orci non viverra. Etiam est mauris, convallis ut tristique vitae, faucibus ac ante.
+                                Integer quis aliquet ante. Nam tincidunt accumsan justo, nec tempus dui suscipit vitae. Aliquam
+                                vel feugiat diam.</p>                        -->
+
+
+                    </div>
+                </div>
+            </div>
+        </ion-content>
+    </div>
+</ion-view>
