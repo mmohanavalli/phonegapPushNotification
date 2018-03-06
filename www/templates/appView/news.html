@@ -46,14 +46,17 @@
                     <div class="container">
                         <div class="news-blk" ng-repeat="newsOverview in newsOverview_values">
                             <a ui-sref="app.newsdetail({ id: newsOverview.id })">
+                                    <div class="new-img">
+                                            <img ng-src="{{adminimage}}{{newsOverview.image}}">
+                                    </div>
                                 <div class="news-content">
                                     <h3>{{newsOverview.title}}</h3>
                                     <p ng-bind-html="newsOverview.description"></p>
                                     <span>{{newsOverview.news_date}}</span>
                                 </div>
-                                <div class="new-img">
+                                <!-- <div class="new-img">
                                         <img ng-src="{{adminimage}}{{newsOverview.image}}">
-                                </div>
+                                </div> -->
                             </a>
                             <!-- <div class="news-content">
                                 <h3>Maximus accumsan non viverra. Etiam est mauris.</h3>

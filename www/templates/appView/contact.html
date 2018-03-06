@@ -1,98 +1,115 @@
 <ion-view class="pane" view-title="Contact">
     <div class="inner-page contact">
-       <header>
-          <div class="container">
-             <div class="side-menu">
-                <a href="#"><img src="img/menu.png"></a>
-                <div class="left-side-menu" style="display:none;">
-                   <div class="side-menu-content">
-                      <div class="menu-blk">
-                         <h2>Menu</h2>
-                         <a href="#" class="togg">X</a>
-                      </div>
-                      <ul class="menu-item">
-                         <li class="menu-1 active"><a href="#">Home</a></li>
-                         <li  class="menu-2"><a href="#">EVENEMENTEN</a></li>
-                         <li  class="menu-3"><a href="#">Categorieen</a></li>
-                         <li  class="menu-4"><a href="#">informatie</a></li>
-                         <li  class="menu-5"><a href="#">Push berichten</a></li>
-                      </ul>
-                   </div>
+        <header>
+            <div class="container">
+                <div class="side-menu">
+                    <a href="#">
+                        <img src="img/menu.png">
+                    </a>
+                    <div class="left-side-menu" style="display:none;">
+                        <div class="side-menu-content">
+                            <div class="menu-blk">
+                                <h2>Menu</h2>
+                                <a href="#" class="togg">X</a>
+                            </div>
+                            <ul class="menu-item">
+                                <li class="menu-1 active">
+                                    <a href="#">Home</a>
+                                </li>
+                                <li class="menu-2">
+                                    <a href="#">EVENEMENTEN</a>
+                                </li>
+                                <li class="menu-3">
+                                    <a href="#">Categorieen</a>
+                                </li>
+                                <li class="menu-4">
+                                    <a href="#">informatie</a>
+                                </li>
+                                <li class="menu-5">
+                                    <a href="#">Push berichten</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-             </div>
-             <div class="page-title">
-                <h1>Contact</h1>
-             </div>
-             <div class="next-page">
-                <button id="back" value="" type="button"></button>
-             </div>
-          </div>
-       </header>
-       <ion-content>
-          <div class="main-content">
-             <div class="contact common-cls">
-             <div class="map">
-                <!-- <img src="img/map.png"> -->
+                <div class="page-title">
+                    <h1>Contact</h1>
                 </div>
-                <div class="contact-add">
-                <div class="container">
-                <div class="contact-add-left">
-                <h2>KNAF Federatiebureau</h2>
-                <p>Duwboot 85</p>
-                <p>3991 CG Houten</p>
+                <div class="next-page">
+                    <button id="back" value="" type="button"></button>
                 </div>
-                <div class="contact-add-ryt">
-                <div>
-                <label>Email : </label>
-                <a href="#">info@knaf.nl</a>
+            </div>
+        </header>
+        <ion-content>
+            <div class="main-content">
+                <div class="contact common-cls">
+                    <!-- <div class="map">
+                        <img src="img/map.png">
+                     </div> -->
+                    <div class="map" ng-init="getMap();">
+                        <div id="map_canvas"></div>
+                    </div>
+                    <div class="contact-add">
+                        <div class="container">
+                            <div class="contact-add-left">
+                                <h2>KNAF Federatiebureau</h2>
+                                <p>Duwboot 85</p>
+                                <p>3991 CG Houten</p>
+                            </div>
+                            <div class="contact-add-ryt">
+                                <div>
+                                    <label>Email : </label>
+                                    <a href="#">info@knaf.nl</a>
+                                </div>
+                                <div>
+                                    <label>Telefoon :</label>
+                                    <a href="#">+31 (0) ) 88 00 47 888</a>
+                                </div>
+                                <p>(Maandag t/m vrijdag van 08:30 - 17:00 uur)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-form">
+                        <div class="contact-title">
+                            <h3>contact</h3>
+                        </div>
+                        <form action="#">
+                            <div class="container">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="name" placeholder="Naam" ng-model="contact.name" ng-class="allvalidation[0].validation">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="email" placeholder="E-mail" ng-model="contact.email" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+                                        ng-class="allvalidation[0].validation">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="telephone" placeholder="Telefoon" ng-class="allvalidation[0].validation" ng-class="allvalidation[0].validation">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="onderwerpame" placeholder="Onderwerp" ng-model="contact.subject" ng-class="allvalidation[0].validation">
+                                </div>
+                                <div class="form-group">
+                                    <textarea type="text" class="form-control" id="Bericht" placeholder="Bericht" ng-model="contact.message" ng-class="allvalidation[0].validation"></textarea>
+                                </div>
+                                <div class="form-group captcha">
+                                    <input type="text" class="form-control" id="code" placeholder="Type de bovenstaande code over">
+                                    <img src="img/captcha.png">
+                                </div>
+                                <input class="btn" type="submit" value="versturen" ng-click="addContact(contact);">
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div>
-                <label>Telefoon :</label>
-                <a href="#">+31 (0) ) 88 00 47 888</a>
-                </div>
-                <p>(Maandag t/m vrijdag van 08:30 - 17:00 uur)</p>
-                </div>
-                </div>
-                </div>
-                <div>
-                    <label>Name</label>                    
-                </div>
-                <div>
-                    <input type="text" name="name" ng-model="contact.name">
-                </div>
-                <div>
-                    <label>Email</label>                    
-                </div>
-                <div>
-                    <input type="text" name="email" ng-model="contact.email">
-                </div>
-                <div>
-                    <label>Telephone</label>                    
-                </div>
-                <div>
-                    <input type="text" name="phone" ng-model="contact.phone">
-                </div>
-                <div>
-                    <label>Subject</label>                    
-                </div>
-                <div>
-                    <input type="text" name="subject" ng-model="contact.subject">
-                </div>
-                <div>
-                    <label>Message</label>                    
-                </div>
-                <div>
-                    <input type="text" name="message" ng-model="contact.message">
-                </div>
-                <div>
-                    <button type="submit" class="btn btn-info" value="Submit" ng-click="addContact(contact);">
-                </div>
-                
-
-             </div>
-             
-
-          </div>
-       </ion-content>
+            </div>
+        </ion-content>
     </div>
- </ion-view>
+</ion-view>
+<script>
+$(document).ready(function () {
+
+    $(".side-menu").click(function () {
+
+        $(".left-side-menu").toggle(1000);
+    });
+});
+</script>

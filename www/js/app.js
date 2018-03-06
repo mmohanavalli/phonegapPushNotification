@@ -68,7 +68,7 @@ angular.module('starter', ['ionic', 'starter.controllers']).run(function ($ionic
 		url: '/events',
 		views: {
 			'menuContent': {
-				templateUrl: 'templates/appView/events.html',
+				templateUrl: 'templates/appView/event-selection.html',
 				controller: "EventsCtrl"
 			}
 		}
@@ -77,8 +77,8 @@ angular.module('starter', ['ionic', 'starter.controllers']).run(function ($ionic
 		url: '/overonsdetail',
 		views: {
 			'menuContent': {
-				templateUrl: 'templates/appView/overonsdetail.html',
-				// controller: "OveronsCtrl"
+				templateUrl: 'templates/appView/over-ons.html',
+				controller: "OveronsCtrl"
 			}
 		}
 	})
@@ -114,7 +114,7 @@ angular.module('starter', ['ionic', 'starter.controllers']).run(function ($ionic
 		views: {
 			'menuContent': {
 				templateUrl: 'templates/appView/category.html',
-			//	controller: "OveronsCtrl"
+				controller: "CategoryCtrl"
 			}
 		}
 	})
@@ -150,3 +150,15 @@ angular.module('starter', ['ionic', 'starter.controllers']).run(function ($ionic
 	
 	 $urlRouterProvider.otherwise('/app/splash');
 })
+var formvalidation = function (allvalidation) {
+	var isvalid2 = true;
+	for (var i = 0; i < allvalidation.length; i++) {
+		if (allvalidation[i].field == "" || !allvalidation[i].field) {
+			allvalidation[i].validation = "ng-dirty";
+			isvalid2 = false;
+			} else {
+			allvalidation[i].validation = "";
+		}
+	}
+	return isvalid2;
+}
