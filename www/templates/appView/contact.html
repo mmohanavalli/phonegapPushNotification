@@ -1,6 +1,6 @@
 <ion-view class="pane" view-title="Contact">
     <div class="inner-page contact">
-        <header>
+        <!-- <header>
             <div class="container">
                 <div class="side-menu">
                     <a href="#">
@@ -39,7 +39,7 @@
                     <button id="back" value="" type="button"></button>
                 </div>
             </div>
-        </header>
+        </header> -->
         <ion-content>
             <div class="main-content">
                 <div class="contact common-cls">
@@ -93,7 +93,8 @@
                                 </div>
                                 <div class="form-group captcha">
                                     <input type="text" class="form-control" id="code" placeholder="Type de bovenstaande code over">
-                                    <img src="img/captcha.png">
+                                    <!-- <img src="img/captcha.png"> -->
+                                    <input type="text" class="form-control" id="mainCaptcha" ng-model="mainCaptcha" ng-init="Captcha()" />
                                 </div>
                                 <input class="btn" type="submit" value="versturen" ng-click="addContact(contact);">
                             </div>
@@ -104,12 +105,3 @@
         </ion-content>
     </div>
 </ion-view>
-<script>
-$(document).ready(function () {
-
-    $(".side-menu").click(function () {
-
-        $(".left-side-menu").toggle(1000);
-    });
-});
-</script>

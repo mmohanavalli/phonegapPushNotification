@@ -132,7 +132,7 @@ footer{position:fixed; bottom:0; display:block; width:100%; z-index:99; backgrou
 /* Dashboard page */
 
 /* Category page */
-.left-side-menu{position:fixed; top:0; left:0;  width: 32%; background:#103978;  padding: 50px 0 0; height: 100% !important; }
+.left-side-menu{position:fixed; top:0; left:0;  width: 32%; background:#103978;  padding: 50px 0 0; height: 100% !important; z-index:99; }
 .left-side-menu h2{font:40px 'HelveticaLT-Condensed-Bold'; color:#fff; display: inline-block; }
 .left-side-menu ul.menu-item{margin: 25px 0 0;}
 .left-side-menu ul.menu-item li a{font:24px/87px 'HelveticaLT-Condensed'; color:#fff; text-transform:uppercase; display:block;padding: 0 0 0 100px;}
@@ -209,12 +209,12 @@ header .container{position:relative;}
 .contact-form .form-group{margin:0 0 20px; border:2px solid #d0d0d0; }
 .contact-form .form-group .form-control{background:#fff;font:20px 'HelveticaLT-Condensed'; color:#7d7d7d;  height: 50px;  padding: 0 25px;   width: 100%;}
 .contact-form .form-group textarea.form-control{height:150px;padding-top:14px; resize:none;}
-.contact-form .form-group.captcha input, .contact-form .form-group.captcha img{display:inline-block; vertical-align:top; height: 50px;}
-.contact-form .form-group.captcha input{width:66%; border-right:2px solid #d0d0d0;}
-.contact-form .form-group.captcha img{float:right;}
+.contact-form .form-group.captcha input{display:inline-block; vertical-align:top; height: 50px;}
+.contact-form .form-group.captcha input:first-child{width:66%; border-right:2px solid #d0d0d0;}
+.contact-form .form-group.captcha input#mainCaptcha{float:right;}
 .contact-form input.btn{width:100%; background:#2f8cbc; border:0; font:35px 'HelveticaLT-Condensed-Bold'; color:#fff; text-transform:uppercase; padding: 15px 0; }
 .contact-form .container{padding-top: 55px;}
-
+.map #map_canvas{height: 400px;}
 /* Contact */
 
 
@@ -255,11 +255,20 @@ header .container{position:relative;}
 /* Events selection */
 
 /* Class page */
-.class-page .text{text-align:center; padding:20px 0 0;}
-.class-page .text h3{font:22px 'HelveticaLT-Condensed'; color:#2d2d2d; text-transform:uppercase; display:inline-block;  margin: 0 7px 0 0;}
-.class-page .text label{display:inline-block; background:#103978; border-radius:30px;  padding: 10px 12px;}
-.class-page .text span{font:22px 'HelveticaLT-Condensed-Bold'; color:#fff; text-transform:uppercase; display:inline-block;}
-.class-page .text .switch_toggle input{opacity:0;}
+.class-page .push-notify{text-align:center; padding:20px 0 0; background:#fff;}
+.class-page .push-notify .push-blk{padding:0 0 20px;}
+.class-page .push-notify h3{font:22px 'HelveticaLT-Condensed'; color:#2d2d2d; text-transform:uppercase; display:inline-block;  margin: 0 7px 0 0;}
+.class-page .push-notify label{display:inline-block; background:#103978; border-radius:30px;  padding: 10px 12px;}
+.class-page .push-notify span{font:22px 'HelveticaLT-Condensed-Bold'; color:#fff; text-transform:uppercase; display:inline-block;}
+.class-page .push-notify label span.active{background:url(../img/select-bg.png) no-repeat center top; border-radius:80px; text-indent:-2000em; width:30px; height:30px;}
+.class-page .push-notify ul{  margin: 0 auto; text-align: left;}
+.class-page .push-notify ul li{display:inline-block; vertical-align:top; width: 355px;}
+.class-page .push-notify ul li a{display:block; background:#2d2d2d; font:35px 'HelveticaLT-Condensed-Bold'; color:#fff; text-transform:uppercase; padding: 40px 20px; margin: 0 18px 23px 0; text-align:center;}
+.push-pdf-blk {  display: inline-block;   width: 150px; }
+.push-pdf { margin: 0 auto;  text-align: center;  width: 100%;padding: 50px 0; }
+.push-pdf span{font:24px/37px 'HelveticaLT-Condensed-Bold'; color:#2d2d2d;   padding: 25px 0; display:block;}
+.push-pdf-blk > img {  margin: 0 auto;  text-align: center;  width: 100px; }
+.class-page .push-notify ul li.active a, .class-page .push-notify ul li a:hover{background:#2f8cbc;}
 /* Class page */
 
 /************ Responsive *************/
@@ -341,6 +350,14 @@ header {  padding: 25px 0; }
 .contact-add-left h2{font-size:22px;}
 .contact-form input.btn{font-size:30px;}
 /* Contact */
+
+
+/* Class page */
+.class-page .push-notify ul li{width: 150px;}
+.class-page .push-notify ul li a{margin: 0 0 23px; font-size:10px; padding: 22px 0;}
+.push-pdf span{font:16px/20px 'HelveticaLT-Condensed-Bold'; padding: 15px 0;}
+
+/* Class page */
 }
 
 

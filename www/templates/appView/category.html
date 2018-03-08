@@ -1,6 +1,6 @@
 <ion-view class="pane" view-title="Category">
     <div class="inner-page category">
-       <header>
+       <!-- <header>
           <div class="container">
              <div class="side-menu">
                 <a href="#"><img src="img/menu.png"></a>
@@ -24,7 +24,7 @@
                 <h1>CATEGORIE</h1>
              </div>
           </div>
-       </header>
+       </header> -->
        <ion-content>
        <div class="main-content" ng-init="getCatgories()">
           <div class="cat-page common-cls">
@@ -33,8 +33,10 @@
              </div>
              <div class="container">
                 <div class="cat-blk" ng-repeat="categoryList in categoryList_values">
+                    <a ui-sref="app.eventclass({ id: categoryList.id })">
                    <h2>{{categoryList.category}}</h2>
                    <p>{{categoryList.slug_category}}</p>
+                </a>
                 </div>
              </div>
           </div>

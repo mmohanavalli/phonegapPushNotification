@@ -1,5 +1,5 @@
 var reloadpage = false; var configreload = {};
-angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCordova', 'ngSanitize', 'ngCordova.plugins', '720kb.datepicker'])
+angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCordova', 'ngSanitize', 'ngCordova.plugins', '720kb.datepicker', 'BotDetectCaptcha'])
 	.controller('AppCtrl', function ($scope, $ionicModal, $timeout, MyServices, $ionicLoading, $location, $filter, $ionicLoading, $cordovaNetwork, $ionicPopup) {
 		$('footer').show();
 		addanalytics("flexible menu");
@@ -59,7 +59,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 		};
 		showloading();
 	})
-	.controller('EventsCtrl', function ($scope, $location, $window, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, $filter, $cordovaDatePicker) {
+	.controller('EventsCtrl', function ($scope, $location, $window, $state, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, $filter, $cordovaDatePicker) {
 		$scope.item;
 		$scope.eventMonth;
 		$scope.eventYear;
@@ -79,7 +79,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 				$ionicLoading.hide();
 			}, 1000);
 		}
-
+		showloading();
 		$scope.getUpcomingEvents = function () {
 			$scope.upcomingEvents = true;
 			$scope.searchEventTab1 = true;
@@ -93,7 +93,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 				}
 				$ionicLoading.hide();
 			}, function (err) {
-				$location.url("/access/events");
+				$location.url("/app/events");
 			})
 
 		}
@@ -127,7 +127,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 					console.log("Status 0");
 					$scope.upcomingEvents = false;
 					$scope.upcomingEventsSearchList = false;
-					$scope.noSearchData = true;					
+					$scope.noSearchData = true;
 				} else {
 					$scope.upcomingSearchEvents_values = [];
 					console.log("Status 1")
@@ -161,7 +161,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 				}
 				$ionicLoading.hide();
 			}, function (err) {
-				$location.url("/access/events");
+				$location.url("/app/events");
 			})
 
 		}
@@ -175,7 +175,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 					$scope.completedEvents = false;
 					$scope.completedEventsSearchList = false;
 					$scope.noSearchData = true;
-				} else {					
+				} else {
 					$scope.completedSearchEvents_values = [];
 					$scope.completedEvents = false;
 					$scope.noSearchData = false;
@@ -189,19 +189,152 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 			}, function (err) {
 				$location.url("/app/events");
 			})
+		}
+
+	})
+	.controller('EventsDetailCtrl', function ($scope, $location, $window, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
+		var showloading = function () {
+			$ionicLoading.show({
+				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
+			});
+		};
+		showloading();
+		if ($stateParams.id != undefined) {
+			$scope.eventId = $stateParams.id;
+			console.log("Class id in event detail ctrl event id" + $scope.eventId);
+			$ionicLoading.hide();
+			MyServices.getEventDetail($scope.eventId, function (data) {
+
+				$scope.eventDetail = data;
+
+				$ionicLoading.hide();
+			}, function (err) {
+				$location.url("/app/eventclass");
+			})
 
 		}
 
 	})
+	.controller('ClassCtrl', function ($scope, $location, $window, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, $cordovaFileTransfer) {
+		var showloading = function () {
+			$ionicLoading.show({
+				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
+			});
+		};
+		showloading();
+		if ($stateParams.classId != undefined && $stateParams.eventId != undefined) {
+			$scope.classId = $stateParams.classId;
+			$scope.eventId = $stateParams.eventId;
+			console.log("Class id in class detail ctrl" + $scope.classId);
+
+			$ionicLoading.hide();
+			MyServices.getEventClass($scope.classId, function (data) {
+				$scope.eventClass_values = [];
+				if (data) {
+					_.each(data, function (n) {
+						$scope.eventClass_values.push(n);
+
+					});
+				}
+				$ionicLoading.hide();
+			}, function (err) {
+				$location.url("/app/eventclass");
+			})
+
+		}
+
+		$scope.getClassTabDetail = function (tabId) {
+			$scope.adminbasefile = "https://devbrandz.nl/knaf/pages/event_downloads?file";
+			$scope.adminbaseimagefile = "https://devbrandz.nl/knaf/assets/images/events/";			
+			$scope.showClassTabFiles = true;
+			console.log("Inside get class" + tabId);
+			MyServices.getEventClassTabDetail(tabId, function (data) {
+				$scope.eventClassTabDetail_values = [];
+
+				if (data) {
+					_.each(data, function (n) {
+						$scope.showClassTabFiles = true;
+						$scope.eventClassTabDetail_values.push(n);
+					});
+				}
+				$ionicLoading.hide();
+			}, function (err) {
+				$location.url("/app/classdetail");
+			})
+
+		}
+
+		$scope.getImgFileExt = function (file) {			
+			var ext = file.split('.');
+			var fileExt = ext[1];
+			if (fileExt == 'jpg') {
+				return true;
+			}
+		}
+
+		$scope.getPdfFileExt = function (file) {			
+			var ext = file.split('.');
+			var fileExt = ext[1];
+			if (fileExt == 'pdf') {
+				return true;
+			}
+			
+		}
+
+		$scope.testFileDownload = function () {
+			var url = "img/sample.pdf";
+
+			// File name only
+			var filename = url.split("/").pop();
+
+			// Save location
+			var targetPath = cordova.file.externalRootDirectory + filename;
+
+			$cordovaFileTransfer.download(url, targetPath, {}, true).then(function (result) {
+				console.log('Success');
+			}, function (error) {
+				console.log('Error');
+			}, function (progress) {
+				// PROGRESS HANDLING GOES HERE
+			});
+		}
+
+	})
+	.controller('ClassDetailCtrl', function ($scope, $location, $window, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
+		var showloading = function () {
+			$ionicLoading.show({
+				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
+			});
+		};
+		showloading();
+		if ($stateParams.tabId != null) {
+			var tabId = $stateParams.tabId;
+			MyServices.getEventClassDetail(tabId, function (data) {
+				$scope.eventClassDetail_values = [];
+
+				if (data) {
+					_.each(data, function (n) {
+						$scope.eventClassDetail_values.push(n);
+					});
+				}
+				$ionicLoading.hide();
+			}, function (err) {
+				$location.url("/app/classdetail");
+			})
+
+
+		}
+
+
+	})
+
 	.controller('NewsCtrl', function ($scope, $location, $window, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
 		var showloading = function () {
 			$ionicLoading.show({
 				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
 			});
-			$timeout(function () {
-				$ionicLoading.hide();
-			}, 1000);
 		}
+		showloading();
 		$scope.getNewsOverview = function () {
 			$scope.adminimage = "https://devbrandz.nl/knaf/images/newsimages/";
 			MyServices.news_overview(function (data) {
@@ -224,10 +357,8 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 			$ionicLoading.show({
 				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
 			});
-			$timeout(function () {
-				$ionicLoading.hide();
-			}, 1000);
 		}
+		showloading();
 		if ($stateParams.id != undefined) {
 			$scope.adminimage = "https://devbrandz.nl/knaf/images/newsimages/";
 			var newsId = $stateParams.id;
@@ -246,16 +377,13 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 		}
 
 	})
-	.controller('ContactCtrl', function ($scope, $location, $window, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, $ionicPopup) {
+	.controller('ContactCtrl', function ($scope, $location, $window, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, $ionicPopup, Captcha) {
 		var showloading = function () {
 			$ionicLoading.show({
 				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
 			});
-			$timeout(function () {
-				$ionicLoading.hide();
-			}, 1000);
 		}
-
+		showloading();
 		var msgforall = function (msg, title) {
 			$ionicLoading.hide();
 			var myPopup = $ionicPopup.show({
@@ -269,8 +397,6 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 		}
 
 		$scope.getMap = function () {
-			// for(var key in data) {
-			// 	var value = data[key];
 			var geocoder = new google.maps.Geocoder();
 			var address = 'KNAF Federatiebureau' + ' ' + ' Duwboot 85' + ',  ' + '3991 CG houten';
 			geocoder.geocode({ 'address': address }, function (results, status) {
@@ -334,16 +460,41 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 				$location.url("/app/contact");
 			})
 		}
+
+
+		$scope.Captcha = function () {
+			var alpha = new Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
+			var i;
+			var code = "";
+			for (i = 0; i < 6; i++) {
+				code = code + alpha[Math.floor(Math.random() * alpha.length)] + " ";
+			}
+			//    var code = a + ' ' + b + ' ' + ' ' + c + ' ' + d + ' ' + e + ' ' + f + ' ' + g;
+			$scope.mainCaptcha = code
+		}
+
+		$scope.ValidCaptcha = function () {
+			var string1 = removeSpaces($scope.mainCaptcha);
+			var string2 = removeSpaces($scope.c);
+			if (string1 == string2) {
+				alert(true);
+			}
+			else {
+				alert(false);
+			}
+		}
+
+		removeSpaces = function (string) {
+			return string.split(' ').join('');
+		}
 	})
 	.controller('CategoryCtrl', function ($scope, $location, $window, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
 		var showloading = function () {
 			$ionicLoading.show({
 				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
 			});
-			$timeout(function () {
-				$ionicLoading.hide();
-			}, 1000);
 		}
+		showloading();
 		$scope.getCatgories = function () {
 			MyServices.categoryList(function (data) {
 				$scope.categoryList_values = [];
@@ -408,13 +559,13 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 		}
 	})
 	.controller('OveronsCtrl', function ($scope, $location, $window, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
-		$scope.overons_values = [];
 		//	addanalytics("Over ons");
 		var showloading = function () {
 			$ionicLoading.show({
 				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
 			});
 		};
+		showloading();
 		$scope.getOveronsDetails = function () {
 			MyServices.overons_detail(function (data) {
 				$scope.overons_values = [];
@@ -425,13 +576,17 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 				}
 				$ionicLoading.hide();
 			}, function (err) {
-				$location.url("/access/overonsdetail");
+				$location.url("/app/overonsdetail");
 			})
 
 		}
 
 	})
 
+	.controller('TabCtrl', function ($scope, $location, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
+
+		//	$location.url("/app/tabinfo");		
+	})
 	.controller('SplashCtrl', function ($scope, $location, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
 		$timeout(function () {
 			$location.url("/app/dashboard");
