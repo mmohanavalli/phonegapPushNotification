@@ -13,7 +13,7 @@ function addanalytics(screen) {
 		}
 	}
 }
-angular.module('starter', ['ionic', 'starter.controllers', 'BotDetectCaptcha']).run(function ($ionicPlatform, MyServices, $cordovaLocalNotification) {
+angular.module('starter', ['ionic', 'starter.controllers']).run(function ($ionicPlatform, MyServices, $cordovaLocalNotification) {
 
 
 	$ionicPlatform.ready(function() {
@@ -89,7 +89,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'BotDetectCaptcha']).
 				}
 			})
 			.state('app.classdetail', {
-				url: '/classdetail/:tabId',
+				url: '/classdetail/:eventId/:classId/:title/:subTabId/:name/:file',
 				views: {
 					'menuContent': {
 						templateUrl: 'templates/appView/classdetail.html',
@@ -142,6 +142,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'BotDetectCaptcha']).
 					}
 				}
 			})
+			.state('app.categoryoverview', {
+				url: '/categoryoverview/:id',
+				views: {
+					'menuContent': {
+						templateUrl: 'templates/appView/categoryoverview.html',
+						controller: "CategoryOverviewCtrl"
+					}
+				}
+			})
 			// .state('app.notification', {
 			// 	url: '/notification',
 			// 	views: {
@@ -153,7 +162,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'BotDetectCaptcha']).
 			// })	
 
 			.state('app.tabinfo', {
-				url: '/info',
+				url: '/info/:info',
 				views: {
 					'menuContent': {
 						templateUrl: 'templates/appView/tab-detail-info.html',

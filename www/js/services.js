@@ -62,9 +62,7 @@ angular.module('starter.services', [])
 					withCredentials: false
 				}).success(callback).error(err);
 			},
-			news_detail: function (newsId, callback, err) {
-				var url = adminbase + 'news_detail/' + newsId;
-				console.log("url" + url);
+			news_detail: function (newsId, callback, err) {			
 				return $http.get(adminbase + 'news_detail/' + newsId, {
 					withCredentials: false
 				}).success(callback).error(err);
@@ -86,16 +84,27 @@ angular.module('starter.services', [])
 
 				}).success(callback).error(err);
 			},
+			getCaptcha: function (callback, err) {
+				return $http.get(adminbase + 'getcaptcha', {
+					withCredentials: false
+				}).success(callback).error(err);
+			},
 			categoryList: function (callback, err) {
 				return $http.get(adminbase + 'category_overview', {
 					withCredentials: false
 				}).success(callback).error(err);
 			},
-			overons_detail: function (callback, err) {
-				return $http.get(adminbase + 'overons', {
+			categoryOverview: function (categoryId,callback, err) {
+				return $http.get(adminbase + 'category_overview/'+categoryId, {
 					withCredentials: false
 				}).success(callback).error(err);
 			},
+			news_detail: function (newsId, callback, err) {
+				return $http.get(adminbase + 'news_detail/' + newsId, {
+					withCredentials: false
+				}).success(callback).error(err);
+			},
+			
 
 
 		};

@@ -46,7 +46,7 @@
                     <!-- <div class="map">
                         <img src="img/map.png">
                      </div> -->
-                    <div class="map" ng-init="getMap();">
+                    <div class="map" ng-init="getMap();getCaptcha();">
                         <div id="map_canvas"></div>
                     </div>
                     <div class="contact-add">
@@ -92,11 +92,10 @@
                                     <textarea type="text" class="form-control" id="Bericht" placeholder="Bericht" ng-model="contact.message" ng-class="allvalidation[0].validation"></textarea>
                                 </div>
                                 <div class="form-group captcha">
-                                    <input type="text" class="form-control" id="code" placeholder="Type de bovenstaande code over">
-                                    <!-- <img src="img/captcha.png"> -->
-                                    <input type="text" class="form-control" id="mainCaptcha" ng-model="mainCaptcha" ng-init="Captcha()" />
+                                    <input type="text" class="form-control" id="code" placeholder="Type de bovenstaande code over" ng-model="userCaptcha">
+                                    <p ng-bind-html="catpchaValue.image"></p>
                                 </div>
-                                <input class="btn" type="submit" value="versturen" ng-click="addContact(contact);">
+                                <input class="btn" type="submit" value="versturen" ng-click="addContact(contact);validate(userCaptcha);">
                             </div>
                         </form>
                     </div>
