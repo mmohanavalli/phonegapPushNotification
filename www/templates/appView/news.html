@@ -1,6 +1,6 @@
 <ion-view class="pane" view-title="News">
     <div class="inner-page news">
-        <header>
+        <!-- <header>
             <div class="container">
                 <div class="side-menu">
                     <a href="#">
@@ -39,7 +39,7 @@
                     <button id="back" value="" type="button"></button>
                 </div>
             </div>
-        </header>
+        </header> -->
         <ion-content>
             <div class="main-content" ng-init="getNewsOverview();">
                 <div class="news common-cls">
@@ -52,7 +52,8 @@
                                 <div class="news-content">
                                     <h3>{{newsOverview.title}}</h3>
                                     <p ng-bind-html="newsOverview.description"></p>
-                                    <span>{{newsOverview.news_date}}</span>
+                                    <span am-time-ago="newsOverview.news_date"></span>
+                                    <!-- <span >{{newsOverview.news_date}}</span> -->
                                 </div>                              
                             </a>                           
                         </div>

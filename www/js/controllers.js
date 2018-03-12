@@ -1,6 +1,6 @@
 var reloadpage = false; var configreload = {};
-angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCordova', 'ngSanitize', 'ngCordova.plugins', '720kb.datepicker','pdfjsViewer','angularMoment'])
-	.controller('AppCtrl', function ($scope, $ionicModal, $timeout, MyServices, $ionicLoading, $location, $filter, $ionicLoading, $cordovaNetwork, $ionicPopup) {
+angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCordova', 'ngSanitize', 'ngCordova.plugins', '720kb.datepicker', 'pdfjsViewer', 'angularMoment'])
+	.controller('AppCtrl', function ($scope, $ionicModal, $timeout, MyServices, CommonServices,MenuService, $ionicLoading, $location, $filter, $ionicLoading, $cordovaNetwork, $ionicPopup) {
 		$('footer').show();
 		addanalytics("flexible menu");
 		$ionicLoading.hide();
@@ -23,6 +23,21 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 		window.addEventListener("online", function (e) {
 			internetaccess();
 		})
+		
+
+		 $scope.checkBack = function(page) {
+			 if(page !="DASHBOARD" && page !="EVENEMENTEN" && page !="NIEUWS" && page !="Categorie"){
+			console.log("Page"+page);
+			return true;
+			 }else{
+			 return false;}
+		 };
+
+		 $scope.goBack = function() {
+			window.history.back();
+		  };
+
+
 		$scope.menudata = [];
 		var loginstatus = false;
 		// loader
@@ -48,7 +63,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 	})
 
 
-	.controller('DashboardCtrl', function ($scope, $location, $window, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
+	.controller('DashboardCtrl', function ($scope,$rootScope, $location, $window, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
 		var showloading = function () {
 			$ionicLoading.show({
 				template: '<ion-spinner class="spinner-energized"></ion-spinner>'
@@ -58,8 +73,9 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 			}, 1000);
 		};
 		showloading();
+		$rootScope.navTitle = "DASHBOARD";
 	})
-	.controller('EventsCtrl', function ($scope, $location, $window, $state, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, $filter, $cordovaDatePicker) {
+	.controller('EventsCtrl', function ($scope,$rootScope, $location, $window, $state, MyServices, CommonServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, $filter) {
 		$scope.item;
 		$scope.eventMonth;
 		$scope.eventYear;
@@ -71,12 +87,16 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 		$scope.completedEventsSearchList = false;
 		$scope.noSearchData = false;
 
+		
+
 		var showloading = function () {
 			$ionicLoading.show({
 				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
 			});
 		}
 		showloading();
+
+		$rootScope.navTitle = "EVENEMENTEN";
 
 		$scope.getUpcomingEvents = function () {
 			$scope.upcomingEvents = true;
@@ -113,6 +133,14 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 			}
 			return $scope.eventMonth, $scope.eventYear;
 
+		}
+
+		$scope.getAddress = function (address) {
+			var arr = address.split(',');
+			var lastIndex = arr.length - 1;
+			$scope.conurtyAddress = arr[lastIndex];
+			console.log("country is ::" + arr[lastIndex]);
+			return $scope.conurtyAddress;
 		}
 
 		$scope.searchEventSelectionTab1 = function (search) {
@@ -190,7 +218,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 		}
 
 	})
-	.controller('EventsDetailCtrl', function ($scope, $location, $window, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
+	.controller('EventsDetailCtrl', function ($scope,$rootScope,$location, $window, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
 		$scope.adminEventImage = "https://devbrandz.nl/knaf/assets/images/events/"
 		var showloading = function () {
 			$ionicLoading.show({
@@ -206,6 +234,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 			MyServices.getEventDetail($scope.eventId, function (data) {
 				$scope.eventClass_values = [];
 				$scope.eventDetail = data.event;
+				$rootScope.navTitle = $scope.eventDetail.title;
 				var eventClass = data.class;
 				if (data) {
 					_.each(eventClass, function (n) {
@@ -221,7 +250,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 		}
 
 	})
-	.controller('ClassCtrl', function ($scope, $location, $window, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, $cordovaFileTransfer) {
+	.controller('ClassCtrl', function ($scope,$rootScope, $location, $window, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, $cordovaFileTransfer) {
 		var showloading = function () {
 			$ionicLoading.show({
 				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
@@ -249,10 +278,15 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 
 		}
 
-		$scope.getClassTabDetail = function (tabId,title,name) {			
+		$scope.getClassName = function (className){
+			$rootScope.navTitle = className;
+			return true;
+		}
+
+		$scope.getClassTabDetail = function (tabId, title, name) {
 			$scope.showClassTabFiles = true;
-			$scope.tabTitle=title;
-			$scope.tabName=name;
+			$scope.tabTitle = title;
+			$scope.tabName = name;
 			console.log("Inside get class" + tabId);
 			MyServices.getEventClassTabDetail(tabId, function (data) {
 				$scope.eventClassTabDetail_values = [];
@@ -286,15 +320,16 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 				return true;
 			}
 
-		}	
+		}
 	})
-	.controller('ClassDetailCtrl', function ($scope, $location, $window, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
+	.controller('ClassDetailCtrl', function ($scope,$rootScope, $location, $window, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
 		var showloading = function () {
 			$ionicLoading.show({
 				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
 			});
 		};
 		showloading();
+		
 		if ($stateParams.classId != undefined && $stateParams.eventId != undefined &&
 			$stateParams.subTabId != undefined && $stateParams.file != undefined &&
 			$stateParams.title != undefined && $stateParams.name != undefined) {
@@ -306,22 +341,26 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 			$scope.tabTitle = $stateParams.title;
 			$scope.tabName = $stateParams.name;
 
+			$rootScope.navTitle =$scope.tabName ;
+
 			var ext = file.toLowerCase().split('.');
 			var fileExt = ext[1];
 
 			if (fileExt == 'jpg') {
 				$scope.image = true;
-				$scope.fileImgUrl = "https://devbrandz.nl/knaf/assets/images/events/"+eventId+"/class_"+classId+"/subtabs_"+subTabId+"/"+file;
-			}else{
+				$scope.fileImgUrl = "https://devbrandz.nl/knaf/assets/images/events/" + eventId + "/class_" + classId + "/subtabs_" + subTabId + "/" + file;
+			} else {
 				$scope.pdf = true;
-				var filePdfUrl = "https://devbrandz.nl/knaf/pages/event_downloads?file="+eventId+"/class_"+classId+"/subtabs_"+subTabId+"/"+file;
-				$scope.pdf = {
-					src: filePdfUrl,  // get pdf source from a URL that points to a pdf
-					data: null // get pdf source from raw data of a pdf
-				};
-			console.log("filePdfUrl"+$scope.filePdfUrl);
-			$scope.filesamplePdfUrl="img/sample.pdf";
-			
+				$scope.filePdfUrl = "https://devbrandz.nl/knaf/pages/event_downloads?file=" + eventId + "/class_" + classId + "/subtabs_" + subTabId + "/" + file;
+
+				// $scope.pdf = {
+				// 	src: filePdfUrl,  // get pdf source from a URL that points to a pdf
+				// 	data: null // get pdf source from raw data of a pdf
+				// };
+				console.log("filePdfUrl" + $scope.filePdfUrl);
+				//var fileURL = URL.createObjectURL(file);
+				$scope.content = $sce.trustAsResourceUrl($scope.filePdfUrl);
+
 			}
 
 			$ionicLoading.hide();
@@ -330,14 +369,18 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 
 	})
 
-	.controller('NewsCtrl', function ($scope, $location, $window, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
+	.controller('NewsCtrl', function ($scope,$rootScope, $location, $window, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate,$filter) {
 		var showloading = function () {
 			$ionicLoading.show({
 				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
 			});
 		}
 		showloading();
+		$rootScope.navTitle = "NIEUWS"
+
 		$scope.getNewsOverview = function () {
+			$scope.exampleDate = moment().hour(8).minute(0).second(0).toDate();
+			
 			$scope.adminimage = "https://devbrandz.nl/knaf/images/newsimages/";
 			MyServices.news_overview(function (data) {
 				$scope.newsOverview_values = [];
@@ -352,15 +395,25 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 			})
 
 		}
+		
+		$scope.changeDate = function (newsDate){
+		//	$scope.item = $filter('date')(new Date(newsDate), "MM dd yyyy");
+			$scope.item=moment(newsDate, 'mm-dd-yyyy', true).format()
+			console.log("date1date1 :: "+$scope.item);
+			return $scope.item;
+		}
+		 
 
 	})
-	.controller('NewsDetailCtrl', function ($scope, $location, $window, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
+	.controller('NewsDetailCtrl', function ($scope,$rootScope, $location, $window, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
 		var showloading = function () {
 			$ionicLoading.show({
 				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
 			});
 		}
 		showloading();
+
+		$rootScope.navTitle = "NIEUWS"
 		if ($stateParams.id != undefined) {
 			$scope.adminimage = "https://devbrandz.nl/knaf/images/newsimages/";
 			var newsId = $stateParams.id;
@@ -379,8 +432,9 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 		}
 
 	})
-	.controller('ContactCtrl', function ($scope, $location, $window, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, $ionicPopup) {
+	.controller('ContactCtrl', function ($scope,$rootScope, $location, $window, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, $ionicPopup) {
 		$scope.captchaWord;
+		$scope.captchaError = false;
 
 		var showloading = function () {
 			$ionicLoading.show({
@@ -388,17 +442,8 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 			});
 		}
 		showloading();
-		var msgforall = function (msg, title) {
-			$ionicLoading.hide();
-			var myPopup = $ionicPopup.show({
-				template: '<p class="text-center">' + msg + '</p>',
-				title: title,
-				scope: $scope,
-			});
-			$timeout(function () {
-				myPopup.close(); //close the popup after 3 seconds for some reason
-			}, 3000);
-		}
+		
+		$rootScope.navTitle = "Contact";
 
 		$scope.getMap = function () {
 			var geocoder = new google.maps.Geocoder();
@@ -422,6 +467,18 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 			$ionicLoading.hide(); $('#popupMenu').hide();
 		}
 
+		var msgforall = function (msg, title) {
+			$ionicLoading.hide();
+			var myPopup = $ionicPopup.show({
+				template: '<p class="text-center">' + msg + '</p>',
+				title: title,
+				scope: $scope,
+			});
+			$timeout(function () {
+				myPopup.close(); //close the popup after 3 seconds for some reason
+			}, 3000);
+		}
+
 		$scope.getCaptcha = function () {
 			MyServices.getCaptcha(function (data) {
 				$scope.catpchaValue = data;
@@ -432,18 +489,28 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 				$location.url("/app/contact");
 			})
 		}
-		$scope.validate = function (userCaptcha) {
-			console.log("userCaptcha" + userCaptcha);
-			if ($scope.catpchaValue.word == userCaptcha) {
-				console.log("success");
-			} else {
-				console.log("failed");
-			}
+		$scope.validate = function (contact) {
+			
+			if (contact.name =="" || contact.email =="" || contact.phone =="" || 
+			contact.subject =="" || contact.message =="" || contact.userCaptcha =="") {
+				msgforall('Fill the all fields', 'Contact Us');
+			} 
+		
 			$location.url("/app/contact");
 		}
+		$scope.clearFormData = function (){
+			// $scope.contact.name = "";
+			// $scope.contact.email = "";
+			// $scope.contact.phone = "";
+			// $scope.contact.subject = "";
+			// $scope.contact.message = "";
+			// $scope.contact.userCaptcha = "";
+			angular.copy({},addContact);
+		}
 
-		$scope.addContact = function (contact) {
-
+		$scope.saveContact = function (contact) {
+			$scope.validate(contact);
+			
 
 			$scope.allvalidation = [{
 				field: contact.name,
@@ -462,36 +529,38 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 				validation: ""
 			}];
 			var check = formvalidation($scope.allvalidation);
-			if (check) {
-				//	MyServices.validateContact(contact, callback, function (err) {
-				$location.url("/access/offline");
-				//	});
+			
+			if ($scope.captchaWord != contact.userCaptcha) {
+				msgforall('Fill the captcha value is correctly', 'Contact Us');
+			}
+			if (check && $scope.captchaWord == contact.userCaptcha) {
+				MyServices.postContactInfo(contact, function (data) {
+					msgforall('Contact is added successfully', 'Contact Us');
+					$scope.clearFormData ();
+					$location.url("/app/contact");
+				}, function (err) {
+					$location.url("/app/contact");
+				})				
 			}
 			else {
-				msgforall('Fill all data or validation error occurs', 'Contact Us');
+				msgforall('Fill all data correctly or validation error occurs', 'Contact Us');
 				$ionicLoading.hide();
+				$location.url("/app/contact");
 			}
 
-			MyServices.postContactInfo(contact, function (data) {
-				//	$scope.contact = [];
-				console.log("value" + data.status);
-				console.log("value" + data.message);
-				// for(var key in data) {
-				// 	var value = data[key];
-				// 	console.log ("value"+value);
-				// }
-			}, function (err) {
-				$location.url("/app/contact");
-			})
+			
 		}
 	})
-	.controller('CategoryCtrl', function ($scope, $location, $window, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
+	.controller('CategoryCtrl', function ($scope,$rootScope, $location, $window, MyServices, CommonServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
 		var showloading = function () {
 			$ionicLoading.show({
 				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
 			});
 		}
 		showloading();
+
+		$rootScope.navTitle = "Categorie";
+
 		$scope.getCatgories = function () {
 			MyServices.categoryList(function (data) {
 				$scope.categoryList_values = [];
@@ -506,9 +575,19 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 			})
 
 		}
-
 	})
-	.controller('CategoryOverviewCtrl', function ($scope, $location, $window, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
+	.controller('CategoryOverviewCtrl', function ($scope, $location, $window, $stateParams, $filter, MyServices, CommonServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
+		$scope.item;
+		$scope.eventMonth;
+		$scope.eventYear;
+		$scope.searchEventTab1 = false;
+		$scope.searchEventTab2 = false;
+		$scope.upcomingEvents = false;
+		$scope.upcomingEventsSearchList = false;
+		$scope.completedEvents = false;
+		$scope.completedEventsSearchList = false;
+		$scope.noSearchData = false;
+		
 		var showloading = function () {
 			$ionicLoading.show({
 				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
@@ -516,9 +595,14 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 		}
 		showloading();
 
+		
+
 		if ($stateParams.id != undefined) {
 			var categoryId = $stateParams.id;
 			$scope.noSearchData = false;
+			$scope.searchEventTab1 = false;
+			$scope.upcomingEvents = true;
+			$scope.searchEventTab1 = true;
 			MyServices.categoryOverview(categoryId, function (data) {
 				$scope.categoryUpcomingOverview_values = [];
 				var categoryUpcomingEvent = data.upcomingevent;
@@ -536,8 +620,16 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 				$location.url("/app/CategoryOverviewCtrl");
 			})
 
+			$scope.clearSearchContent = function (){
+				$scope.date = null;
+				$scope.content = null;
+			}
+
 			$scope.getCompletedCategory = function () {
-				$scope.noSearchData = false;
+				$scope.completedEvents = true;
+				$scope.searchEventTab2 = true;
+				$scope.searchEventTab1 = false;
+				$scope.noSearchData = false;				
 				MyServices.categoryOverview(categoryId, function (data) {
 					$scope.categoryCompletedOverview_values = [];
 					var categoryCompletedEvent = data.completedevent;
@@ -555,8 +647,83 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 					$location.url("/app/CategoryOverviewCtrl");
 				})
 			}
-		}
 
+			$scope.getDate = function (getDate) {
+				$scope.item = $filter('date')(getDate, "MMM-yyyy");
+				var arr = $scope.item.split('-');
+				$scope.eventMonth = arr[0];
+				$scope.eventYear = arr[1];
+				if ($scope.eventMonth === "Mar") {
+					$scope.eventMonth = "Maa";
+
+				} else if ($scope.eventMonth === "May") {
+					$scope.eventMonth = "Mei";
+				} else if ($scope.eventMonth === "Oct") {
+					$scope.eventMonth = "Okt";
+				} else {
+					$scope.eventMonth;
+				}
+				return $scope.eventMonth, $scope.eventYear;
+			}
+
+			$scope.getAddress = function (address) {
+				$scope.countryAddress = CommonServices.getAddress(address);
+				return $scope.countryAddress;
+			}
+
+			$scope.searchEventSelectionTab1 = function (search) {
+				$scope.searchEventTab1 = true;
+				$scope.searchEventTab2 = false;
+				var tab_selected = 'tab1';
+				MyServices.getEventSearchTab1(search, tab_selected, function (data) {
+					if (data.status == "0") {
+						console.log("Status 0");
+						$scope.upcomingEvents = false;
+						$scope.upcomingEventsSearchList = false;
+						$scope.noSearchData = true;
+					} else {
+						$scope.upcomingSearchEvents_values = [];
+						console.log("Status 1")
+						$scope.upcomingEvents = false;
+						$scope.noSearchData = false;
+						$scope.upcomingEventsSearchList = true;
+						if (data) {
+							_.each(data, function (n) {
+								$scope.upcomingSearchEvents_values.push(n);
+							});
+						}
+					}
+				}, function (err) {
+					$location.url("/app/events");
+				})
+
+			}
+
+			$scope.searchEventSelectionTab2 = function (search) {
+				var tab_selected = 'tab2';
+				MyServices.getEventSearchTab1(search, tab_selected, function (data) {
+					console.log("value" + data.status);
+					if (data.status == "0") {
+						console.log("Status 0");
+						$scope.completedEvents = false;
+						$scope.completedEventsSearchList = false;
+						$scope.noSearchData = true;
+					} else {
+						$scope.completedSearchEvents_values = [];
+						$scope.completedEvents = false;
+						$scope.noSearchData = false;
+						$scope.completedEventsSearchList = true;
+						if (data) {
+							_.each(data, function (n) {
+								$scope.completedSearchEvents_values.push(n);
+							});
+						}
+					}
+				}, function (err) {
+					$location.url("/app/events");
+				})
+			}
+		}
 
 	})
 	.controller('NotificationCtrl', function ($scope, $ionicPlatform, $cordovaLocalNotification) {
@@ -606,7 +773,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 			});
 		}
 	})
-	.controller('OveronsCtrl', function ($scope, $location, $window, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
+	.controller('OveronsCtrl', function ($scope,$rootScope, $location, $window, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
 		//	addanalytics("Over ons");
 		var showloading = function () {
 			$ionicLoading.show({
@@ -614,6 +781,9 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 			});
 		};
 		showloading();
+		
+		$rootScope.navTitle = "OVER ONS";
+
 		$scope.getOveronsDetails = function () {
 			MyServices.overons_detail(function (data) {
 				$scope.overons_values = [];
@@ -629,7 +799,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 
 	})
 
-	.controller('TabCtrl', function ($scope, $location, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
+	.controller('TabCtrl', function ($scope,$rootScope, $location, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
 
 		var showloading = function () {
 			$ionicLoading.show({
@@ -637,7 +807,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 			});
 		}
 		showloading();
-
+		$rootScope.navTitle = "INFO"
 		if ($stateParams.info != undefined) {
 			$scope.information = $stateParams.info;
 			$ionicLoading.hide();
@@ -657,19 +827,4 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 			return input.split(splitChar)[splitIndex];
 		}
 	})
-	.directive('jqdatepicker', function () {
-		return {
-			restrict: 'A',
-			require: 'ngModel',
-			controller: 'EventsCtrl',
-			link: function (scope, element, attrs, ngModelCtrl) {
-				$(element).datepicker({
-					dateFormat: 'DD, d  MM, yy',
-					onSelect: function (date) {
-						scope.date = date;
-						scope.$apply();
-					}
-				});
-			}
-		};
-	});
+

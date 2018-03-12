@@ -13,7 +13,7 @@ function addanalytics(screen) {
 		}
 	}
 }
-angular.module('starter', ['ionic', 'starter.controllers']).run(function ($ionicPlatform, MyServices, $cordovaLocalNotification) {
+angular.module('starter', ['ionic', 'starter.controllers','angularMoment']).run(function ($ionicPlatform, MyServices, CommonServices, $cordovaLocalNotification, amMoment) {
 
 
 	$ionicPlatform.ready(function() {
@@ -22,6 +22,7 @@ angular.module('starter', ['ionic', 'starter.controllers']).run(function ($ionic
 		}
 	  });
 
+	  amMoment.changeLocale('de');
 
 
 })

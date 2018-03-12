@@ -8,6 +8,7 @@
 
 		<ion-pane ion-side-menu-content>
 				<ion-side-menu-content>
+						<header>
 		
 				<!-- <ion-nav-back-button class="button-clear"><i class="icon ion-chevron-left"></i> Back</ion-nav-back-button> -->
 				<div class="container">
@@ -30,9 +31,13 @@
 										</div>
 						</div>
 						<div class="page-title">
-							 <h1>dashboard</h1>
+							 <h1>{{navTitle}}</h1>
+						</div>
+						<div class="next-page" ng-if="checkBack(navTitle)">
+							<button id="back" value="" type="button" ng-click="goBack();"></button>
 						</div>
 				 </div>
+				</header> 
 			<ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
 		</ion-pane>
 	</ion-side-menus> 

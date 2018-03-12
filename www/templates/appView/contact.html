@@ -73,29 +73,59 @@
                         <div class="contact-title">
                             <h3>contact</h3>
                         </div>
-                        <form action="#">
+                        <form  name="addContact" ng-submit="saveContact(addContact);">
                             <div class="container">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="name" placeholder="Naam" ng-model="contact.name" ng-class="allvalidation[0].validation">
+                                    <input type="text" class="form-control" id="name" name="naam" placeholder="Naam" ng-model="addContact.name" ng-class="allvalidation[0].validation" required>
                                 </div>
+
+                                <div ng-show="addContact.$submitted || addContact.naam.$touched">
+                                    <div ng-show="addContact.naam.$error.required" style="color:red; ">Naam required
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="email" placeholder="E-mail" ng-model="contact.email" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
-                                        ng-class="allvalidation[0].validation">
+                                    <input type="text" class="form-control" id="email" name="emailid" placeholder="E-mail" ng-model="addContact.email" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" ng-class="allvalidation[0].validation" required>
                                 </div>
+                                <div ng-show="addContact.$submitted || addContact.emailid.$touched">
+                                    <div ng-show="addContact.emailid.$error.required" style="color:red;">E-mail required
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="telephone" placeholder="Telefoon" ng-class="allvalidation[0].validation" ng-class="allvalidation[0].validation">
+                                    <input type="text" class="form-control" id="telephone" name="telephone" placeholder="Telefoon" ng-model="addContact.phone" ng-class="allvalidation[0].validation" required>
                                 </div>
+                                <div ng-show="addContact.$submitted || addContact.telephone.$touched">
+                                    <div ng-show="addContact.telephone.$error.required" style="color:red; ">Telefoon required
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="onderwerpame" placeholder="Onderwerp" ng-model="contact.subject" ng-class="allvalidation[0].validation">
+                                    <input type="text" class="form-control" id="onderwerpame" name="onderwerpame" placeholder="Onderwerp" ng-model="addContact.subject" ng-class="allvalidation[0].validation" required>
                                 </div>
+                                <div ng-show="addContact.$submitted || addContact.onderwerpame.$touched">
+                                    <div ng-show="addContact.onderwerpame.$error.required" style="color:red; ">Onderwerp required
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
-                                    <textarea type="text" class="form-control" id="Bericht" placeholder="Bericht" ng-model="contact.message" ng-class="allvalidation[0].validation"></textarea>
+                                    <textarea type="text" class="form-control" id="Bericht" name="bericht" placeholder="Bericht" ng-model="addContact.message" ng-class="allvalidation[0].validation" required></textarea>
                                 </div>
+                                <div ng-show="addContact.$submitted || addContact.bericht.$touched">
+                                    <div ng-show="addContact.bericht.$error.required" style="color:red; ">Bericht required
+                                    </div>
+                                </div>
+
                                 <div class="form-group captcha">
-                                    <input type="text" class="form-control" id="code" placeholder="Type de bovenstaande code over" ng-model="userCaptcha">
+                                    <input type="text" class="form-control" id="code" name="code" placeholder="Type de bovenstaande code over" ng-model="addContact.userCaptcha" ng-class="allvalidation[0].validation" required>
                                     <p ng-bind-html="catpchaValue.image"></p>
                                 </div>
-                                <input class="btn" type="submit" value="versturen" ng-click="addContact(contact);validate(userCaptcha);">
+                                <div ng-show="addContact.$submitted || addContact.code.$touched">
+                                    <div ng-show="addContact.code.$error.required" style="color:red; ">Captcha limit required
+                                    </div>
+                                </div>
+
+                                <input class="btn" type="submit" value="versturen">
                             </div>
                         </form>
                     </div>

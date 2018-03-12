@@ -62,8 +62,13 @@ angular.module('starter.services', [])
 					withCredentials: false
 				}).success(callback).error(err);
 			},
-			news_detail: function (newsId, callback, err) {			
+			news_detail: function (newsId, callback, err) {
 				return $http.get(adminbase + 'news_detail/' + newsId, {
+					withCredentials: false
+				}).success(callback).error(err);
+			},
+			overons_detail: function (callback, err) {
+				return $http.get(adminbase + 'overons', {
 					withCredentials: false
 				}).success(callback).error(err);
 			},
@@ -94,8 +99,8 @@ angular.module('starter.services', [])
 					withCredentials: false
 				}).success(callback).error(err);
 			},
-			categoryOverview: function (categoryId,callback, err) {
-				return $http.get(adminbase + 'category_overview/'+categoryId, {
+			categoryOverview: function (categoryId, callback, err) {
+				return $http.get(adminbase + 'category_overview/' + categoryId, {
 					withCredentials: false
 				}).success(callback).error(err);
 			},
@@ -104,8 +109,51 @@ angular.module('starter.services', [])
 					withCredentials: false
 				}).success(callback).error(err);
 			},
-			
+
 
 
 		};
-	});
+	})
+	.factory('CommonServices', function () {
+		return {
+			getAddress: function (address) {
+				var arr = address.split(',');
+				var lastIndex = arr.length - 1;
+				var conurtyAddress = arr[lastIndex];
+				return conurtyAddress;
+			}
+		};
+		return {
+			getDate: function (date) {
+				$scope.item = $filter('date')(date, "MMM-yyyy");
+				var arr = $scope.item.split('-');
+				$scope.eventMonth = arr[0];
+				$scope.eventYear = arr[1];
+				if ($scope.eventMonth === "Mar") {
+					$scope.eventMonth = "Maa";
+
+				} else if ($scope.eventMonth === "May") {
+					$scope.eventMonth = "Mei";
+				} else if ($scope.eventMonth === "Oct") {
+					$scope.eventMonth = "Okt";
+				} else {
+					$scope.eventMonth;
+				}
+				return $scope.eventMonthYear;
+			}
+		};
+	})
+	.factory('MenuService', function() {
+
+		var menuItems = [
+			{ text: '1 Page One', iconClass: 'icon ion-map', link: 'one'},
+			{ text: '2 Page Two', iconClass: 'icon ion-gear-b', link: 'two'},
+			{ text: '3 Page Three', iconClass: 'icon ion-star', link: 'three'}
+		];
+	  
+		return {
+		  all: function() {
+			return menuItems;
+		  }
+		}
+	  });

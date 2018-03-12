@@ -6901,8 +6901,8 @@ button.item.item-button-right {
   stroke: #444;
   fill: #444; }
   .spinner svg {
-    width: 28px;
-    height: 28px; }
+    width: 70px;
+    height: 70px; }
   .spinner.spinner-light {
     stroke: #ffffff;
     fill: #ffffff; }
@@ -6910,67 +6910,67 @@ button.item.item-button-right {
     stroke: #ccc;
     fill: #ccc; }
   .spinner.spinner-positive {
-    stroke: #6db122;
-    fill: #6db122; }
+    stroke: #0f3978;
+    fill: #0f3978; }
   .spinner.spinner-calm {
-    stroke: #6db122;
-    fill: #6db122; }
+    stroke: #0f3978;
+    fill: #0f3978; }
   .spinner.spinner-balanced {
-    stroke: #6db122;
-    fill: #6db122; }
+    stroke: #0f3978;
+    fill: #0f3978; }
   .spinner.spinner-assertive {
-    stroke: #6db122;
-    fill: #6db122; }
+    stroke: #0f3978;
+    fill: #0f3978; }
   .spinner.spinner-energized {
-    stroke: #6db122;
-    fill: #6db122; }
+    stroke: #0f3978;
+    fill: #0f3978; }
   .spinner.spinner-royal {
-    stroke: #6db122;
-    fill: #6db122; }
+    stroke: #0f3978;
+    fill: #0f3978; }
   .spinner.spinner-dark {
-    stroke: #6db122;
-    fill: #6db122; }
+    stroke: #0f3978;
+    fill: #0f3978; }
 
 .spinner-android {
-  stroke: #6db122; }
+  stroke: #0f3978; }
 
 .spinner-ios,
 .spinner-ios-small {
-  stroke: #6db122; }
+  stroke: #0f3978; }
 
 .spinner-spiral .stop1 {
-  stop-color: #6db122;
+  stop-color: #0f3978;
   stop-opacity: 0; }
 
 .spinner-spiral.spinner-light .stop1 {
-  stop-color: #6db122; }
+  stop-color: #0f3978; }
 
 .spinner-spiral.spinner-light .stop2 {
-  stop-color: #6db122; }
+  stop-color: #0f3978; }
 
 .spinner-spiral.spinner-stable .stop2 {
-  stop-color: #6db122; }
+  stop-color: #0f3978; }
 
 .spinner-spiral.spinner-positive .stop2 {
-  stop-color: #6db122; }
+  stop-color: #0f3978; }
 
 .spinner-spiral.spinner-calm .stop2 {
-  stop-color: #6db122; }
+  stop-color: #0f3978; }
 
 .spinner-spiral.spinner-balanced .stop2 {
-  stop-color: #6db122; }
+  stop-color: #0f3978; }
 
 .spinner-spiral.spinner-assertive .stop2 {
-  stop-color: #6db122; }
+  stop-color: #0f3978; }
 
 .spinner-spiral.spinner-energized .stop2 {
-  stop-color: #6db122; }
+  stop-color: #0f3978; }
 
 .spinner-spiral.spinner-royal .stop2 {
-  stop-color: #6db122; }
+  stop-color: #0f3978; }
 
 .spinner-spiral.spinner-dark .stop2 {
-  stop-color: #6db122; }
+  stop-color: #0f3978; }
 
 /**
  * Forms
@@ -8138,7 +8138,7 @@ progress {
         color: #fff; }
   .button.button-positive {
     border-color: #e10f0f;
-    background-color: #6db122;
+    background-color: #0f3978;
     color: #fff; }
     .button.button-positive:hover {
       color: #fff;
@@ -9715,21 +9715,21 @@ img.play {
   top: 92px; }
 
 .platform-ios.platform-cordova:not(.fullscreen) .top-statusbar {
-  border-top: 20px solid #6db122 !important;
+  border-top: 20px solid #0f3978 !important;
   width: 100%; }
 
 .popup-container .popup {
-  border: 1px solid #6db122; }
+  border: 1px solid #0f3978; }
 
 .backdrop {
   background-color: transparent; }
 
 .spinner-android {
-  stroke: #6db122; }
+  stroke: #0f3978; }
 
 .spinner-ios,
 .spinner-ios-small {
-  stroke: #6db122; }
+  stroke: #0f3978; }
 
 .slider-pager {
   bottom: 15px; }
@@ -9737,7 +9737,7 @@ img.play {
     opacity: 1;
     color: white; }
     .slider-pager .slider-pager-page.active {
-      color: #6db122; }
+      color: #0f3978; }
 
 #map {
   width: 100%;
