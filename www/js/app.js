@@ -13,14 +13,19 @@ function addanalytics(screen) {
 		}
 	}
 }
-angular.module('starter', ['ionic', 'starter.controllers','angularMoment']).run(function ($ionicPlatform, MyServices, CommonServices, $cordovaLocalNotification, amMoment) {
+angular.module('starter', ['ionic', 'starter.controllers','ngCordova','angularMoment']).run(function ($ionicPlatform, MyServices, CommonServices, $cordovaLocalNotification, amMoment) {
 
 
-	$ionicPlatform.ready(function() {
-		if(window.StatusBar) {
-		  StatusBar.styleDefault();
+	$ionicPlatform.ready(function () {
+        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+        // for form inputs)
+        if (window.cordova && window.cordova.plugins.Keyboard) {
+            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+        }
+        if (window.StatusBar) {
+            StatusBar.styleDefault();
 		}
-	  });
+	});
 
 	  amMoment.changeLocale('de');
 
@@ -52,16 +57,8 @@ angular.module('starter', ['ionic', 'starter.controllers','angularMoment']).run(
 						controller: "DashboardCtrl"
 					}
 				}
-			})
-			// .state('app.sidemenu', {
-			// 	url: '/sidemenu',
-			// 	views: {
-			// 		'menuContent': {
-			// 			templateUrl: 'templates/appView/sideMenu.html',
-			// 		//	controller: "DashboardCtrl"
-			// 		}
-			// 	}
-			// })
+			})			
+			
 			.state('app.events', {
 				url: '/events',
 				views: {
@@ -81,7 +78,7 @@ angular.module('starter', ['ionic', 'starter.controllers','angularMoment']).run(
 				}
 			})
 			.state('app.eventclass', {
-				url: '/eventclass/:eventId/:classId',
+				url: '/eventclass/:eventId/:classId/:className',
 				views: {
 					'menuContent': {
 						templateUrl: 'templates/appView/class-page.html',
@@ -152,15 +149,15 @@ angular.module('starter', ['ionic', 'starter.controllers','angularMoment']).run(
 					}
 				}
 			})
-			// .state('app.notification', {
-			// 	url: '/notification',
-			// 	views: {
-			// 		'menuContent': {
-			// 			templateUrl: 'templates/appView/notification.html',
-			// 			controller: "NotificationCtrl"
-			// 		}
-			// 	}
-			// })	
+			.state('app.notification', {
+				url: '/notification',
+				views: {
+					'menuContent': {
+						templateUrl: 'templates/appView/notification.html',
+						controller: "NotificationCtrl"
+					}
+				}
+			})	
 
 			.state('app.tabinfo', {
 				url: '/info/:info',

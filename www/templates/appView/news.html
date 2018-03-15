@@ -1,65 +1,27 @@
 <ion-view class="pane" view-title="News">
-    <div class="inner-page news">
-        <!-- <header>
-            <div class="container">
-                <div class="side-menu">
-                    <a href="#">
-                        <img src="img/menu.png">
-                    </a>
-                    <div class="left-side-menu" style="display:none;">
-                        <div class="side-menu-content">
-                            <div class="menu-blk">
-                                <h2>Menu</h2>
-                                <a href="#" class="togg">X</a>
+    <!-- <div class="inner-page news"> -->
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-content>
+        <div class="main-content" ng-init="getNewsOverview();">
+            <div class="news common-cls">
+                <div class="container">
+                    <div class="news-blk" ng-repeat="newsOverview in newsOverview_values">
+                        <a ui-sref="app.newsdetail({ id: newsOverview.id })">
+                            <div class="new-img">
+                                <img ng-src="{{adminimage}}{{newsOverview.image}}">
                             </div>
-                            <ul class="menu-item">
-                                <li class="menu-1 active">
-                                    <a href="#">Home</a>
-                                </li>
-                                <li class="menu-2">
-                                    <a href="#">EVENEMENTEN</a>
-                                </li>
-                                <li class="menu-3">
-                                    <a href="#">Categorieen</a>
-                                </li>
-                                <li class="menu-4">
-                                    <a href="#">informatie</a>
-                                </li>
-                                <li class="menu-5">
-                                    <a href="#">Push berichten</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="page-title">
-                    <h1>NIEUWS</h1>
-                </div>
-                <div class="next-page">
-                    <button id="back" value="" type="button"></button>
-                </div>
-            </div>
-        </header> -->
-        <ion-content>
-            <div class="main-content" ng-init="getNewsOverview();">
-                <div class="news common-cls">
-                    <div class="container">
-                        <div class="news-blk" ng-repeat="newsOverview in newsOverview_values">
-                            <a ui-sref="app.newsdetail({ id: newsOverview.id })">
-                                    <div class="new-img">
-                                            <img ng-src="{{adminimage}}{{newsOverview.image}}">
-                                    </div>
-                                <div class="news-content">
-                                    <h3>{{newsOverview.title}}</h3>
-                                    <p ng-bind-html="newsOverview.description"></p>
-                                    <span am-time-ago="newsOverview.news_date"></span>
-                                    <!-- <span >{{newsOverview.news_date}}</span> -->
-                                </div>                              
-                            </a>                           
-                        </div>
+                            <div class="news-content">
+                                <h3>{{newsOverview.title}}</h3>
+                                <p ng-bind-html="newsOverview.description"></p>
+                                <span am-time-ago="newsOverview.news_date"></span>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
-        </ion-content>
-    </div>
+        </div>
+    </ion-content>
+    <!-- </div> -->
 </ion-view>

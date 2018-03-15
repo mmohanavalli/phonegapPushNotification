@@ -25,7 +25,7 @@ angular.module('starter.services', [])
 					withCredentials: false
 				}).success(callback).error(err);
 			},
-			getEventSearchTab1: function (search, tab_selected, callback, err) {
+			getEventSearchTab: function (search, tab_selected, callback, err) {
 				if (search.date == undefined) {
 					return $http.get(adminbase + 'events?date=&search=' + search.content + '&tab_selected=' + tab_selected, {
 						withCredentials: false
@@ -38,7 +38,7 @@ angular.module('starter.services', [])
 					return $http.get(adminbase + 'events?date=' + search.date + '&search=' + search.content + '&tab_selected=' + tab_selected, {
 						withCredentials: false
 					}).success(callback).error(err);
-				}
+				}				
 
 			},
 			getEventDetail: function (eventId, callback, err) {

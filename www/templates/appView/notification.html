@@ -9,12 +9,16 @@
                             
                             <div class="container">
                                 <ul>
-                                    <li>
+                                    <!-- <li>
                                         <button style="margin: 30px;width: 100px;height: 70px;" type="submit"  value="submit" ng-click="triggerNotification();" ></button>
                                         <button type="submit"   style="margin: 30px;width: 100px;height: 70px;" value="submit" ng-click="testLocal();"></button>
                                         <button type="submit"   style="margin: 30px;width: 100px;height: 70px;" value="submit" ng-click="showToast();"></button>
-                                    </li>
-    
+                                    </li> -->
+                                    <div class="padding">
+                                        <button class="button" ng-click="showToast('testing the bottom', 'long', 'bottom')">Long Bottom</button>
+                                        <button class="button" ng-click="showToast('testing the top', 'short', 'top')">Short Top</button>
+                                        <button class="button" ng-click="showToast('this is a test', 'long', 'center')">Long Center</button>
+                                    </div>
                                 </ul>
                             </div>
                         </div>

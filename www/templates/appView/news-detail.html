@@ -1,62 +1,29 @@
 <ion-view class="pane" view-title="News detail">
-    <div class="inner-page news-detail">
-        <!-- <header>
-            <div class="container">
-                <div class="side-menu">
-                    <a href="#">
-                        <img src="img/menu.png">
-                    </a>
-                    <div class="left-side-menu" style="display:none;">
-                        <div class="side-menu-content">
-                            <div class="menu-blk">
-                                <h2>Menu</h2>
-                                <a href="#" class="togg">X</a>
-                            </div>
-                            <ul class="menu-item">
-                                <li class="menu-1 active">
-                                    <a href="#">Home</a>
-                                </li>
-                                <li class="menu-2">
-                                    <a href="#">EVENEMENTEN</a>
-                                </li>
-                                <li class="menu-3">
-                                    <a href="#">Categorieen</a>
-                                </li>
-                                <li class="menu-4">
-                                    <a href="#">informatie</a>
-                                </li>
-                                <li class="menu-5">
-                                    <a href="#">Push berichten</a>
-                                </li>
-                            </ul>
+    <!-- <div class="inner-page news-detail"> -->
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <div class="next-page">
+        <button id="back" value="" type="button" ng-click="goBack()"></button>
+    </div>
+    <ion-content>
+        <div class="main-content">
+            <div class="news-detail common-cls">
+                <div class="container" ng-repeat="newsDetail in newsDetails_values">
+                    <div class="news-det-img">
+                        <img ng-src="{{adminimage}}{{newsDetail.image}}">
+                        <div class="news-det-content">
+                            <h2>{{newsDetail.title}}}</h2>
+                            <p class="time">
+                                <!-- VANDAAG, -->
+                                <span am-time-ago="newsDetail.news_date"></span>
+                            </p>
                         </div>
                     </div>
-                </div>
-                <div class="page-title">
-                    <h1>NIEUWS detail</h1>
-                </div>
-                <div class="next-page">
-                    <button id="back" value="" type="button"></button>
+                    <p ng-bind-html="newsDetail.description"></p>
                 </div>
             </div>
-        </header> -->
-        <ion-content>
-            <div class="main-content">
-                <div class="news-detail common-cls">
-                    <div class="container" ng-repeat="newsDetail in newsDetails_values">                        
-                            <div class="news-det-img">
-                                <img ng-src="{{adminimage}}{{newsDetail.image}}">
-                                <div class="news-det-content">
-                                    <h2>{{newsDetail.title}}}</h2>
-                                    <p class="time">VANDAAG,
-                                        <span>{{newsDetail.news_date}} uur</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <p ng-bind-html="newsDetail.description"></p>
-                    </div>
-                </div>
-            </div>
-        </ion-content>
-    </div>
+        </div>
+    </ion-content>
+    <!-- </div> -->
 </ion-view>
