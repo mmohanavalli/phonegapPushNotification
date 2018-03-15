@@ -1,0 +1,58 @@
+<ion-view class="pane" view-title={{className}}>
+    <!-- <div class="inner-page class">       -->
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <div class="next-page">
+        <button id="back" value="" type="button" ng-click="goBack()"></button>
+    </div>
+    <ion-content>
+        <div class="main-content">
+            <div class="class-page common-cls">
+                <div class="push-notify">
+                    <div class="push-blk">
+                        <h3>Push Notifications</h3>
+                        <label class="switch_toggle" onclick="">
+                            <span>
+                                <span class="active">ja</span>
+                                <span>nee</span>
+                            </span>
+                            <a class="btn btn-primary"></a>
+                        </label>
+                    </div>
+                    <div class="container">
+                        <ul>
+                            <li ng-repeat="eventClass in eventClass_values">
+                                <a href="" ng-click="getClassTabDetail(eventClass.id, eventClass.title, eventClass.name)">
+                                    <div ng-if="getClassName(eventClass.name)">
+                                        {{eventClass.name}}
+                                    </div>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="push-pdf" ng-show="showClassTabFiles">
+                    <div class="push-pdf-blk" ng-repeat="eventTabvalues in eventClassTabDetail_values">
+                        <div ng-if="getImgFileExt(eventTabvalues.file)">
+                            <a ui-sref="app.classdetail({eventId : eventId , classId : classId ,title : tabTitle, subTabId: eventTabvalues.subtab_id, name : tabName , file : eventTabvalues.file })">
+                                <img src="img/img-logo.png">
+                                <span>Bekijken</span>
+                            </a>
+                        </div>
+                        <div ng-if="getPdfFileExt(eventTabvalues.file)">
+                            <a ui-sref="app.classdetail({eventId : eventId , classId : classId ,title : tabTitle, subTabId: eventTabvalues.subtab_id, name : tabName , file : eventTabvalues.file })">
+                                <img src="img/pdf-bg.png">
+                                <span>Downloaden</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        </div>
+    </ion-content>
+    <!-- </div> -->
+</ion-view>

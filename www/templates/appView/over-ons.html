@@ -1,0 +1,23 @@
+<ion-view view-title="Overons">
+    <!-- <div class="inner-page overons"> -->
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+        <div class="next-page">
+                <button id="back" value="" type="button" ng-click="goBack()"></button>
+        </div>
+    </ion-nav-buttons>
+    
+    <ion-content>
+        <div class="main-content">
+            <div class="about-us common-cls">
+
+                <div class="container" ng-init="getOveronsDetails();">
+                    <p ng-bind-html="overons_values"></p>
+                </div>
+
+
+            </div>
+        </div>
+    </ion-content>
+    <!-- </div> -->
+</ion-view>

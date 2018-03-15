@@ -1,0 +1,105 @@
+<ion-view view-title={{navTitle}}>
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-content class="has-header">
+        <div class="main-content" ng-init="getUpcomingEvents();">
+
+            <div class="event-sel common-cls">
+
+                <div class="text">
+                    <p>Op deze pagina vindt u evenementen welke door de desbetreffende clubs zelf worden gevuld met de laatste
+                        en actuele infornmatie.</p>
+                </div>
+
+                <div class="tabs-blk-container">
+                    <ul class="tab">
+                        <li class={{tabUpcomingLink}} data-tab="tab-1" ng-click="getUpcomingEvents();">ACTUELE EVENEMENTEN</li>
+                        <li class={{tabCompletedLink}} data-tab="tab-2" ng-click="getCompletedEvents();">EVENEMENTEN VERLEDEN</li>
+                    </ul>
+                    <div id="tab-1" class="tab-content current" ng-show="upcomingEvents">
+                        <div class="container">
+                            <!-- upcomingEvents -->
+                            <div class="tab-blk" ng-repeat="upcomingEvents in upcomingEvents_values" >
+                                <a ui-sref="app.eventdetail({ id: upcomingEvents.id })">
+                                    <div class="tab-left">
+                                        <span>
+                                            {{ upcomingEvents.event_date | date : "dd" }}
+                                            <div ng-if="getDate(upcomingEvents.event_date)">
+                                                <p>{{eventMonth}} {{eventYear}}</p>
+                                            </div>
+                                        </span>
+                                    </div>
+                                    <div class="tab-ryt">
+                                        <h3>{{upcomingEvents.title}}
+                                            <span ng-if="getAddress(upcomingEvents.address)">({{countryAddress}})</span>
+                                        </h3>
+                                        <p ng-bind-html="upcomingEvents.description"></p>
+                                    </div>
+                                </a>
+                            </div>  
+                        </div>
+                    </div>
+
+                    <div id="tab-2" class="tab-content current" ng-show="completedEvents">
+                        <div class="container">
+                            <!-- completedEventss        -->
+                            <div class="tab-blk" ng-repeat="completedEventss in completedEvents_values"  >
+                                <a ui-sref="app.eventdetail({ id: completedEventss.id })">
+                                    <div class="tab-left">
+                                        <span>
+                                            {{ completedEventss.event_date | date : "dd" }}
+                                            <div ng-if="getDate(completedEventss.event_date)">
+                                                <p>{{eventMonth}} {{eventYear}}</p>
+                                            </div>
+                                        </span>
+                                    </div>
+                                    <div class="tab-ryt">
+                                        <h3>{{completedEventss.title}}
+                                            <span ng-if="getAddress(completedEventss.address)">({{countryAddress}})</span>
+                                        </h3>
+                                        <p ng-bind-html="completedEventss.description"></p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div  class="tab-content current" ng-show="noData">
+                    <div class="container">
+                        <!-- No Results -->
+                        <div class="tab-blk">
+                            <div class="tab-ryt">
+                                <p>Sorry, er zijn geen aankomende evenementen op dit moment.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="event-sel-blk" >
+                    <div class="container">
+                        <form>
+                            <div class="form-group">
+                                <label>Filter</label>
+                                <datepicker class="form-datepicker" date-format="dd/MM/yyyy" date-typer="true">
+                                    <input class="form-control" type="text" name="date" ng-model="search.date" placeholder="- Op datum -">
+                                </datepicker>
+                            </div>
+                            <div class="form-group">
+                                <label>Zoeken</label>
+                                <input type="text" id="Zoeken" placeholder="Zoeken" ng-model="search.content">
+                            </div>
+                            <button type="submit" id="tab1" class="submit" ng-click="searchEventSelectionTab(search , $event);" ng-show="searchEventTab1">Zoeken</button>
+                            <button type="submit" id="tab2" class="submit" ng-click="searchEventSelectionTab(search, $event);" ng-show="searchEventTab2">Zoeken</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </ion-content>
+</ion-view>
