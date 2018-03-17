@@ -15,6 +15,11 @@ var WORDPRESS_self_API_URL = 'wp-json/wp/v2/posts';
 angular.module('starter.services', [])
 	.factory('MyServices', function ($http, $filter) {
 		return {
+			getGlobalNotification: function (callback, err) {
+				return $http.get(adminbase + 'globalnotification', {
+					withCredentials: false
+				}).success(callback).error(err);
+			},
 			completed_events: function (callback, err) {
 				return $http.get(adminbase + 'event_overview/completed_events', {
 					withCredentials: false

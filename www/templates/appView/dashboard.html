@@ -50,12 +50,15 @@
 </ion-view> -->
 <ion-view view-title="Dashboard">
         <ion-nav-buttons side="left">
-          <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
+          <button menu-toggle="left"class="button button-icon icon ion-navicon" ng-click="hideToastMessage()"></button>
         </ion-nav-buttons>
         <ion-content class="has-header">
                 <div class="main-content">
-                        <div class="dashboard-page">
+                        <!-- <toast></toast> -->
+                        <div class="dashboard-page" ng-init="showToast();">
+                                
                             <div class="container">
+                                  
                                 <div class="d-blk-1 d-blk">
                                     <a ui-sref="app.events">EVENTS</a>
                                 </div>

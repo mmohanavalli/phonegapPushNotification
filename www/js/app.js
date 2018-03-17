@@ -13,7 +13,7 @@ function addanalytics(screen) {
 		}
 	}
 }
-angular.module('starter', ['ionic', 'starter.controllers','ngCordova','angularMoment']).run(function ($ionicPlatform, MyServices, CommonServices, $cordovaLocalNotification, amMoment) {
+angular.module('starter', ['ionic', 'starter.controllers','ngCordova','angularMoment','ngToast']).run(function ($ionicPlatform, MyServices, CommonServices, $cordovaLocalNotification, amMoment) {
 
 
 	$ionicPlatform.ready(function () {
@@ -153,7 +153,7 @@ angular.module('starter', ['ionic', 'starter.controllers','ngCordova','angularMo
 				url: '/notification',
 				views: {
 					'menuContent': {
-						templateUrl: 'templates/appView/notification.html',
+						templateUrl: 'templates/appView/push-notification.html',
 						controller: "NotificationCtrl"
 					}
 				}

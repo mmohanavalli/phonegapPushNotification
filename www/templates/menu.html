@@ -4,59 +4,9 @@
 	</ion-side-menu-content>
 </ion-side-menus> -->
 
-<!-- <ion-side-menus enable-menu-with-back-views="false" ng-controller="AppCtrl">
-	<ion-pane ion-side-menu-content>
-		<ion-side-menu-content>
-			<header>
-				<div class="container">
-					<div class="side-menu">
-						<a href="">
-							<img src="img/menu.png">
-						</a>
-						<div class="left-side-menu" style="display:none;">
-							<div class="side-menu-content">
-								<div class="menu-blk">
-									<h2>Menu</h2>
-									<a href="" class="togg">X</a>
-								</div>
-								<ul class="menu-item" has-header="true">
-									<li class="menu-1 active">
-										<a ui-sref="app.dashboard">Home</a>
-									</li>
-									<li class="menu-2">
-										<a ui-sref="app.events">EVENEMENTEN</a>
-									</li>
-									<li class="menu-3">
-										<a ui-sref="app.category">Categorieen</a>
-									</li>
-									<li class="menu-4">
-										<a ui-sref="app.info">informatie</a>
-									</li>
-									<li class="menu-5">
-										<a ui-sref="app.notification">Push berichten</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="page-title">
-						<h1>{{navTitle}}</h1>
-					</div>
-					<div class="next-page" ng-if="checkBack(navTitle)">
-						<button id="back" value="" type="button" ng-click="goBack();"></button>
-					</div>
-				</div>
-			</header>
-			<ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
-	</ion-pane>
-</ion-side-menus> -->
-
-<ion-side-menus>
+<ion-side-menus enable-menu-with-back-views="false" ng-controller="AppCtrl">
 		<ion-pane ion-side-menu-content>
-		  <ion-nav-bar class="bar-stable">
-			<!-- <ion-nav-back-button class="button-clear">
-				<i class="icon ion-chevron-left"></i> Back
-			</ion-nav-back-button> -->
+		  <ion-nav-bar class="bar-stable">		
 		  </ion-nav-bar>
 		  <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
 		</ion-pane>	  
@@ -66,19 +16,19 @@
 		  </header>		
 		  <ion-content>
 			<ion-list class="menu-item">
-			  <ion-item  class="menu-1 active" nav-clear menu-close href="#/app/dashboard">
+			  <ion-item  class={{menu1}} nav-clear menu-close href="#/app/dashboard">
 				Home
 			  </ion-item>
-			  <ion-item class="menu-2" nav-clear menu-close href="#/app/events">
+			  <ion-item class={{menu2}} nav-clear menu-close href="#/app/events">
 				EVENEMENTEN
 			  </ion-item>
-			  <ion-item class="menu-3" nav-clear menu-close href="#/app/category">
+			  <ion-item class={{menu3}} nav-clear menu-close href="#/app/category">
 				Categorieen
 			  </ion-item>
-			  <ion-item class="menu-4" nav-clear menu-close href="#/app/info">
-				informatie
+			  <ion-item class={{menu4}} nav-clear menu-close href="#/app/overonsdetail">
+				Over Ons
 			  </ion-item>
-			  <ion-item class="menu-5" nav-clear menu-close href="#/app/notification">
+			  <ion-item class={{menu5}} nav-clear menu-close href="#/app/notification">
 				Push berichten
 			  </ion-item>
 			</ion-list>

@@ -1,8 +1,7 @@
 var reloadpage = false; var configreload = {};
-angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCordova', 'ngSanitize', 'ngCordova.plugins', '720kb.datepicker', 'pdfjsViewer', 'angularMoment'])
-	.controller('AppCtrl', function ($scope,$rootScope,$window, $ionicModal, $timeout, MyServices, CommonServices, MenuService, $ionicLoading, $location, $filter, $ionicLoading, $cordovaNetwork, $ionicPopup, $ionicSideMenuDelegate) {
+angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCordova', 'ngSanitize', 'ngCordova.plugins', '720kb.datepicker', 'pdfjsViewer', 'angularMoment', 'ionic-toast', 'ngToast', 'ngAnimate'])
+	.controller('AppCtrl', function ($scope, $rootScope, $window, $ionicModal, $timeout, MyServices, CommonServices, MenuService, $ionicLoading, $location, $filter, $ionicLoading, $cordovaNetwork, $ionicPopup, $ionicSideMenuDelegate, ionicToast) {
 		$('footer').show();
-		addanalytics("flexible menu");
 		$ionicLoading.hide();
 		function internetaccess(toState) {
 			if (navigator) {
@@ -14,6 +13,18 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 				}
 			}
 		}
+		$window.sessionStorage.setItem('notificationInit',true);
+		$rootScope.sessionValue = $window.sessionStorage.getItem('notificationInit');
+		$rootScope.sessionClassValue = true ;
+
+		$rootScope.menu1 = "menu-1 active item item-complex";
+		$rootScope.menu2 = "menu-2  item item-complex";
+		$rootScope.menu3 = "menu-3  item item-complex";
+		$rootScope.menu4 = "menu-4  item item-complex";
+		$rootScope.menu5 = "menu-5  item item-complex";
+
+
+
 		$scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
 			internetaccess(toState);
 		});
@@ -28,8 +39,8 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 			$ionicSideMenuDelegate.toggleLeft();
 		}
 
-		$rootScope.goBack=function() {    
-			$window.history.back(); 
+		$rootScope.goBack = function () {
+			$window.history.back();
 		}
 
 		// loader
@@ -41,43 +52,67 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 				$ionicLoading.hide();
 			}, 1000);
 		};
-			$scope.showloading();
-
-		// $(document).ready(function () {
-		// 	$(".side-menu").click(function () {
-		// 		$(".left-side-menu").toggle(1000);
-		// 	});
-		// });
-
-		$(document).ready(function () {
-			$('ul.tab li').click(function () {
-				var tab_id = $(this).attr('data-tab');
-				$('ul.tab li').removeClass('current');
-				$('.tab-content').removeClass('current');
-				$(this).addClass('current');
-				$("#" + tab_id).addClass('current');
-			})
-		})
-
+		$scope.hideToast = function () {
+			ionicToast.hide();
+		};
+		$scope.hideToast();
+		$scope.showloading();
 	})
 
 
-	.controller('DashboardCtrl', function ($scope, $location, $window, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, $ionicSideMenuDelegate) {
+	.controller('DashboardCtrl', function ($scope,$rootScope, $location, $window, MyServices, $ionicLoading, $ionicPlatform, $timeout, $sce, $ionicSlideBoxDelegate, $ionicSideMenuDelegate, ionicToast, ngToast, $cordovaToast) {
+		
+		$rootScope.menu1 = "menu-1 active item item-complex";
+		$rootScope.menu2 = "menu-2  item item-complex";
+		$rootScope.menu3 = "menu-3  item item-complex";
+		$rootScope.menu4 = "menu-4  item item-complex";
+		$rootScope.menu5 = "menu-5  item item-complex";
+	
 		var showloading = function () {
 			$ionicLoading.show({
 				template: '<ion-spinner class="spinner-energized"></ion-spinner>'
-			});
-			$timeout(function () {
-				$ionicLoading.hide();
-			}, 1000);
+			});			
 		};
+		$scope.hideToast = function () {
+			ionicToast.hide();
+		};
+		$scope.hideToast();
 		showloading();
 
 		$scope.openMenu = function () {
 			$ionicSideMenuDelegate.toggleLeft();
+		}	
+
+		$scope.hideToastMessage = function () {
+			ionicToast.hide();
 		}
+
+		$scope.showToast = function () {
+			showloading();
+			MyServices.getGlobalNotification(function (data) {
+				$scope.globalNotification = data;
+				if ($scope.globalNotification.active == '1' && $rootScope.sessionValue) {
+					var message = '<img src="img/notification-bell.png"/> <br>'
+					//	ionicToast.show($scope.globalNotification.notification, 'top', true, 2500);
+					ionicToast.show(message + $scope.globalNotification.notification, 'top', true, 2500);
+				}
+				$ionicLoading.hide();
+			}, function (err) {
+				$location.url("/app/events");
+			})
+		}
+
+		
+
 	})
-	.controller('EventsCtrl', function ($scope, $location, $window, $state, MyServices, CommonServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, $filter) {
+	.controller('EventsCtrl', function ($scope,$rootScope, $location, $window, $state, MyServices, CommonServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, $filter, ionicToast) {
+		
+		$rootScope.menu1 = "menu-1  item item-complex";
+		$rootScope.menu2 = "menu-2  active item item-complex";
+		$rootScope.menu3 = "menu-3  item item-complex";
+		$rootScope.menu4 = "menu-4  item item-complex";
+		$rootScope.menu5 = "menu-5  item item-complex";
+
 		$scope.item;
 		$scope.eventMonth;
 		$scope.eventYear;
@@ -85,19 +120,22 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 		$scope.searchEventTab2 = false;
 		$scope.upcomingEvents = false;
 		$scope.completedEvents = false;
-	//	$scope.upcomingNoData = false;
 		$scope.noData = false;
 		$scope.tabUpcomingLink = "tab-link current";
 		$scope.tabCompletedLink = "tab-link ";
 
-
+		$rootScope.sideMenuActive = 'active';
 
 		var showloading = function () {
 			$ionicLoading.show({
 				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
 			});
 		}
-		// showloading();
+		$scope.hideToast = function () {
+			ionicToast.hide();
+		};
+		$scope.hideToast();
+		showloading();
 
 		$scope.navTitle = "EVENEMENTEN";
 
@@ -106,6 +144,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 		}
 
 		$scope.getUpcomingEvents = function () {
+			showloading();
 			$scope.completedEvents = false;
 			$scope.noData = false;
 			$scope.searchEventTab2 = false;
@@ -120,7 +159,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 					_.each(data, function (n) {
 						$scope.upcomingEvents_values.push(n);
 					});
-				}else{
+				} else {
 					$scope.noData = true;
 				}
 				$ionicLoading.hide();
@@ -147,7 +186,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 			}
 			return $scope.eventMonth, $scope.eventYear;
 
-		}		
+		}
 
 		$scope.getAddress = function (address) {
 			$scope.countryAddress = CommonServices.getAddress(address);
@@ -155,7 +194,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 		}
 
 		$scope.searchEventSelectionTab = function (search, event) {
-			
+			showloading();
 			var tab_selected = event.target.id;
 			console.log(event.target.id);
 
@@ -185,6 +224,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 							});
 						}
 					}
+					$ionicLoading.hide();
 
 				}, function (err) {
 					$location.url("/app/events");
@@ -216,6 +256,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 							});
 						}
 					}
+					$ionicLoading.hide();
 				}, function (err) {
 					$location.url("/app/events");
 				})
@@ -223,6 +264,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 		}
 
 		$scope.getCompletedEvents = function () {
+			showloading();
 			$scope.upcomingEvents = false;
 			$scope.noData = false;
 			$scope.searchEventTab1 = false;
@@ -236,7 +278,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 					_.each(data, function (n) {
 						$scope.completedEvents_values.push(n);
 					});
-				}else{
+				} else {
 					$scope.noData = true;
 				}
 				$ionicLoading.hide();
@@ -247,7 +289,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 		}
 
 	})
-	.controller('EventsDetailCtrl', function ($scope, $rootScope, $location, $window, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, $filter) {
+	.controller('EventsDetailCtrl', function ($scope, $rootScope, $location, $window, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, $filter, ionicToast) {
 		$scope.adminEventImage = "https://devbrandz.nl/knaf/assets/images/events/"
 		var showloading = function () {
 			$ionicLoading.show({
@@ -255,6 +297,10 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 			});
 		};
 		showloading();
+
+		$scope.hideToastMessage = function () {
+			ionicToast.hide();
+		}
 
 		if ($stateParams.id != undefined) {
 			showloading();
@@ -264,6 +310,11 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 				$scope.eventClass_values = [];
 				$scope.eventDetail = data.event;
 				$rootScope.navTitle = $scope.eventDetail.title;
+				if ($scope.eventDetail.push_active == '1' && $rootScope.sessionValue) {
+				//	var plain_text = $filter('htmlToPlaintext')($scope.eventDetail.push_notify);
+					var message = '<img src="img/notification-bell.png"/> <br>' + $scope.eventDetail.push_notify
+					ionicToast.show(message + plain_text, 'top', true, 2500);
+				}
 				var eventClass = data.class;
 				if (data) {
 					_.each(eventClass, function (n) {
@@ -310,21 +361,42 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 
 
 	})
-	.controller('ClassCtrl', function ($scope, $rootScope, $location, $window, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, $filter) {
+	.controller('ClassCtrl', function ($scope, $rootScope, $location, $window, $stateParams, MyServices, $ionicLoading, $timeout,$interval, $sce, $ionicSlideBoxDelegate, $filter, ionicToast) {
+		$scope.switchOn = false;
+		$scope.switchOff = false;
 		var showloading = function () {
 			$ionicLoading.show({
 				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
 			});
 		};
+		$scope.hideToast = function () {
+			ionicToast.hide();
+		};
+		$scope.hideToast();
 		showloading();
+
+		$scope.hideToastMessage = function () {
+			ionicToast.hide();
+		}
+
+		$scope.initStatus = function () {
+			if($rootScope.sessionValue && $rootScope.sessionClassValue){
+			$scope.switchOn = true;
+			$scope.switchOff = false;
+			}else{
+				$scope.switchOn = false;
+				$scope.switchOff = true;
+			}
+		}
+
 		if ($stateParams.classId != undefined && $stateParams.eventId != undefined && $stateParams.eventId != undefined) {
 			$scope.classId = $stateParams.classId;
 			$scope.eventId = $stateParams.eventId;
 			$scope.className = $stateParams.className;
+			showloading();
 
 			console.log("Class id in class detail ctrl" + $scope.classId);
 
-			$ionicLoading.hide();
 			MyServices.getEventClass($scope.classId, function (data) {
 				$scope.eventClass_values = [];
 				if (data) {
@@ -332,24 +404,58 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 						$scope.eventClass_values.push(n);
 
 					});
-				}
+					if($scope.eventClass_values.length!='0'){
+						if ($scope.eventClass_values[0].push_class_active == '1' && $rootScope.sessionValue && $rootScope.sessionClassValue) {
+						//	var plain_text = $filter('htmlToPlaintext')($scope.eventClass_values.push_class_notify[0]);
+							var message = '<img src="img/notification-bell.png"/> <br>' + $scope.eventClass_values[0].push_class_notify
+							ionicToast.show(message , 'top', true, 2500);
+							$window.sessionStorage.setItem('classNotification',message);
+						}
+					}
+				}				
 				$ionicLoading.hide();
 			}, function (err) {
 				$location.url("/app/eventclass");
 			})
 
+		}				
+		
+		$scope.ShowHide = function () {
+			//If DIV is visible it will be hidden and vice versa.
+			$scope.switchOn = !$scope.switchOn;
+			if (!$scope.switchOn) {
+				$scope.switchOn = false;
+				$scope.switchOff = true;
+			//	$rootScope.sessionValue = false;
+				$rootScope.sessionClassValue = false;
+				$window.sessionStorage.removeItem('notificationInit');
+				console.log("Session inside session off  :" + $window.sessionStorage.getItem('notificationInit'));	
+			} else if ($scope.switchOn) {
+				$scope.switchOn = true;
+				$scope.switchOff = false;
+			//	$rootScope.sessionValue = true;	
+				$rootScope.sessionClassValue = true;
+				if($rootScope.sessionValue){
+				var message = $window.sessionStorage.getItem('classNotification');
+				$interval(toastMessage, 4000);	
+			       function	toastMessage(){
+					ionicToast.show(message , 'top', true, 2500);
+				}	
+			}
+			}
 		}
+
 
 		$scope.getClassName = function (className) {
 			$scope.navTitle = className;
 			return true;
 		}
-
 		$scope.getClassTabDetail = function (tabId, title, name) {
 			$scope.showClassTabFiles = true;
 			$scope.tabTitle = title;
 			$scope.tabName = name;
 			console.log("Inside get class" + tabId);
+			showloading();
 			MyServices.getEventClassTabDetail(tabId, function (data) {
 				$scope.eventClassTabDetail_values = [];
 
@@ -384,12 +490,16 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 
 		}
 	})
-	.controller('ClassDetailCtrl', function ($scope, $rootScope, $location, $window, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
+	.controller('ClassDetailCtrl', function ($scope, $rootScope, $location, $window, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, ionicToast) {
 		var showloading = function () {
 			$ionicLoading.show({
 				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
 			});
 		};
+		$scope.hideToast = function () {
+			ionicToast.hide();
+		};
+		$scope.hideToast();
 		showloading();
 
 		if ($stateParams.classId != undefined && $stateParams.eventId != undefined &&
@@ -399,6 +509,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 			var eventId = $stateParams.eventId;
 			var subTabId = $stateParams.subTabId;
 			var file = $stateParams.file;
+			showloading();
 
 			$scope.tabTitle = $stateParams.title;
 			$scope.tabName = $stateParams.name;
@@ -417,25 +528,25 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 
 				$scope.srcPdf = "https://docs.google.com/viewer?url=" + $scope.filePdfUrl + "&embedded=true";
 
-				console.log("filePdfUrl:::" + $scope.filePdfUrl);
-				console.log("$scope.srcPdf:::" + $scope.srcPdf);
 				$scope.data = $sce.trustAsResourceUrl($scope.filePdfUrl);
-				$scope.src = $sce.trustAsResourceUrl($scope.srcPdf);
-
+				$scope.src = $sce.trustAsResourceUrl($scope.srcPdf);				
 			}
-
 			$ionicLoading.hide();
 		}
 
 
 	})
 
-	.controller('NewsCtrl', function ($scope, $rootScope, $location, $window, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, $filter) {
+	.controller('NewsCtrl', function ($scope, $rootScope, $location, $window, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, $filter, ionicToast) {
 		var showloading = function () {
 			$ionicLoading.show({
 				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
 			});
 		}
+		$scope.hideToast = function () {
+			ionicToast.hide();
+		};
+		$scope.hideToast();
 		showloading();
 
 		$scope.getNewsOverview = function () {
@@ -474,12 +585,16 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 
 
 	})
-	.controller('NewsDetailCtrl', function ($scope, $rootScope, $location, $window, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
+	.controller('NewsDetailCtrl', function ($scope, $rootScope, $location, $window, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, ionicToast) {
 		var showloading = function () {
 			$ionicLoading.show({
 				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
 			});
 		}
+		$scope.hideToast = function () {
+			ionicToast.hide();
+		};
+		$scope.hideToast();
 		showloading();
 
 		if ($stateParams.id != undefined) {
@@ -500,7 +615,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 		}
 
 	})
-	.controller('ContactCtrl', function ($scope, $location, $window, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, $ionicPopup) {
+	.controller('ContactCtrl', function ($scope, $location, $window, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, $ionicPopup, ionicToast) {
 		$scope.captchaWord;
 		$scope.captchaError = false;
 
@@ -509,6 +624,10 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
 			});
 		}
+		$scope.hideToast = function () {
+			ionicToast.hide();
+		};
+		$scope.hideToast();
 		showloading();
 
 		$scope.getMap = function () {
@@ -617,12 +736,22 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 
 		}
 	})
-	.controller('CategoryCtrl', function ($scope, $location, $window, MyServices, CommonServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
+	.controller('CategoryCtrl', function ($scope, $location, $window, MyServices, CommonServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, ionicToast) {
+		$rootScope.menu1 = "menu-1  item item-complex";
+		$rootScope.menu2 = "menu-2  item item-complex";
+		$rootScope.menu3 = "menu-3  active item item-complex";
+		$rootScope.menu4 = "menu-4  item item-complex";
+		$rootScope.menu5 = "menu-5  item item-complex";
+
 		var showloading = function () {
 			$ionicLoading.show({
 				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
 			});
 		}
+		$scope.hideToast = function () {
+			ionicToast.hide();
+		};
+		$scope.hideToast();
 		showloading();
 
 
@@ -642,7 +771,7 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 
 		}
 	})
-	.controller('CategoryOverviewCtrl', function ($scope, $location, $window, $stateParams, $filter, MyServices, CommonServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
+	.controller('CategoryOverviewCtrl', function ($scope, $location, $window, $stateParams, $filter, MyServices, CommonServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, ionicToast) {
 		$scope.item;
 		$scope.eventMonth;
 		$scope.eventYear;
@@ -659,6 +788,10 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
 			});
 		}
+		$scope.hideToast = function () {
+			ionicToast.hide();
+		};
+		$scope.hideToast();
 		showloading();
 
 
@@ -792,103 +925,73 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 		}
 
 	})
-	.controller('NotificationCtrl', function ($scope, $ionicPlatform, $cordovaLocalNotification) {
+	.controller('NotificationCtrl', function ($scope,$rootScope,$window, $ionicLoading, $ionicPlatform, ionicToast) {
+		$rootScope.menu1 = "menu-1  item item-complex";
+		$rootScope.menu2 = "menu-2  item item-complex";
+		$rootScope.menu3 = "menu-3  item item-complex";
+		$rootScope.menu4 = "menu-4  item item-complex";
+		$rootScope.menu5 = "menu-5  active item item-complex";
 
-
-		// $scope.add = function () {
-		// 	var alarmTime = new Date();
-		// 	alarmTime.setMinutes(alarmTime.getMinutes() + 1);
-		// 	$cordovaLocalNotification.add({
-		// 		id: "1234",
-		// 		date: alarmTime,
-		// 		message: "This is a message",
-		// 		title: "This is a title",
-		// 		autoCancel: true,
-		// 		sound: null
-		// 	}).then(function () {
-		// 		console.log("The notification has been set");
-		// 	});
-		// };
-
-		// $ionicPlatform.ready(function () {
-		// 	$scope.scheduleSingleNotification = function () {
-		// 		$cordovaLocalNotification.schedule({
-		// 			id: 1,
-		// 			text: 'test'
-		// 		})
-		// 			.then(function (result) {
-		// 				console.log(result);
-		// 			});
-		// 	}
-		// });
-
-		// $scope.schedule = function () {
-		// 	console.log('Notification triggered');
-		// 	$cordovaLocalNotification.schedule.schedule({
-		// 		id: '222',
-		// 		text: 'Some text',
-		// 		title: 'Some title',
-		// 		icon: 'http://sciactive.com/pnotify/includes/github-icon.png'
-		// 	}).then(function () {
-		// 		console.log('Notification triggered');
-		// 	});
-		// }
-		// $scope.isScheduled = function () {
-		// 	$cordovaLocalNotification.isScheduled("1234").then(function (isScheduled) {
-		// 		alert("Notification 1234 Scheduled: " + isScheduled);
-		// 	});
-		// }
-
-		$ionicPlatform.ready(function () {
-			var date = new Date();
-			$scope.notifText = 'Hello World!';
-
-			$scope.triggerNotification = function () {
-
-				$cordovaLocalNotification.schedule({
-					id: 1,
-					title: 'Dynamic Notification',
-					text: $scope.notifText
-				}).then(function (result) {
-					console.log(result);
-				});
-			}
-
-			$scope.testLocal = function () {
-				cordova.plugins.notification.local.schedule({
-					id: 1,
-					text: 'My first notification',
-					//	sound: isAndroid ? 'file://sound.mp3' : 'file://beep.caf',
-					every: 'day',
-					at: date,
-					data: { key: 'value' }
-				})
-			}
-
-			cordova.plugins.notification.local.schedule({
-				id: 1,
-				title: "Message Title",
-				text: "Message Text",
-				at: date,
-				sound: 'file://sound.mp3',
-				//	icon: "http://domain.com/icon.png"
-			});
-
-		});
-
-		//		var sound = device.platform == 'Android' ? 'file://sound.mp3' : 'file://beep.caf';
-
-
-
-
-	})
-	.controller('OveronsCtrl', function ($scope, $location, $window, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
-		//	addanalytics("Over ons");
 		var showloading = function () {
 			$ionicLoading.show({
 				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
 			});
 		};
+		$scope.hideToast = function () {
+			ionicToast.hide();
+		};
+		$scope.hideToast();
+		showloading();
+		
+		$scope.switchOn = false;
+		$scope.switchOff = false;		
+		$scope.initStatus = function () {
+			if($rootScope.sessionValue){
+			$scope.switchOn = true;
+			$scope.switchOff = false;
+			}else{
+				$scope.switchOn = false;
+				$scope.switchOff = true;
+			}
+		}
+		$ionicLoading.hide();
+		$scope.ShowHide = function () {
+			//If DIV is visible it will be hidden and vice versa.
+			$scope.switchOn = !$scope.switchOn;
+			if (!$scope.switchOn) {
+				$scope.switchOn = false;
+				$scope.switchOff = true;
+				$rootScope.sessionValue = false;
+				$window.sessionStorage.removeItem('notificationInit');
+				console.log("Session inside session off  :" + $window.sessionStorage.getItem('notificationInit'));	
+			} else if ($scope.switchOn) {
+				$scope.switchOn = true;
+				$scope.switchOff = false;
+				$rootScope.sessionValue = true;	
+				console.log("Session Storage session on :" + $window.sessionStorage.getItem('notificationInit'));
+		
+			}
+		}
+
+
+
+	})
+	.controller('OveronsCtrl', function ($scope, $location, $window, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, ionicToast) {
+		$rootScope.menu1 = "menu-1  item item-complex";
+		$rootScope.menu2 = "menu-2  item item-complex";
+		$rootScope.menu3 = "menu-3  item item-complex";
+		$rootScope.menu4 = "menu-4  active item item-complex";
+		$rootScope.menu5 = "menu-5  item item-complex";
+
+		var showloading = function () {
+			$ionicLoading.show({
+				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
+			});
+		};
+		$scope.hideToast = function () {
+			ionicToast.hide();
+		};
+		$scope.hideToast();
 		showloading();
 
 		$scope.getOveronsDetails = function () {
@@ -906,13 +1009,17 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 
 	})
 
-	.controller('TabCtrl', function ($scope, $location, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
+	.controller('TabCtrl', function ($scope, $location, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, ionicToast) {
 
 		var showloading = function () {
 			$ionicLoading.show({
 				template: '<ion-spinner class="spinner-positive"></ion-spinner>'
 			});
 		}
+		$scope.hideToast = function () {
+			ionicToast.hide();
+		};
+		$scope.hideToast();
 		showloading();
 
 		if ($stateParams.info != undefined) {
@@ -921,18 +1028,30 @@ angular.module('starter.controllers', ['starter.services', 'ion-gallery', 'ngCor
 		}
 		//	$location.url("/app/tabinfo");		
 	})
-	.controller('SplashCtrl', function ($scope, $location, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate) {
+	.controller('SplashCtrl', function ($scope, $location, $stateParams, MyServices, $ionicLoading, $timeout, $sce, $ionicSlideBoxDelegate, ionicToast) {
 		$timeout(function () {
 			$location.url("/app/dashboard");
 		}, 3000);
+		$scope.hideToast = function () {
+			ionicToast.hide();
+		};
+		$scope.hideToast();
+
 		$('footer').hide();
 		$('body').attr('id', 'splash');
 	})
 
-	.filter('split', function () {
-		return function (input, splitChar, splitIndex) {
-			// do some bounds checking here to ensure it has that index
-			return input.split(splitChar)[splitIndex];
-		}
-	})
+	// .filter('split', function () {
+	// 	return function (input, splitChar, splitIndex) {
+	// 		// do some bounds checking here to ensure it has that index
+	// 		return input.split(splitChar)[splitIndex];
+	// 	}
+	// })
+
+	.filter('htmlToPlaintext', function () {
+		return function (text) {
+			return text ? String(text).replace(/<[^>]+>/gm, '') : '';
+		};
+	}
+	);
 

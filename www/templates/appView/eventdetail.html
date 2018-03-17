@@ -1,51 +1,58 @@
 <ion-view class="pane" view-title={{eventDetail.title}}>
     <!-- <div class="inner-page event-detail"> -->
-            <ion-nav-buttons side="left">
-                    <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
-                  </ion-nav-buttons>
-     
-       <ion-content>
-          <div class="main-content">
-             <div class="event-det common-cls">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-click="hideToastMessage();"></button>
+    </ion-nav-buttons>
+
+    <ion-content>
+        <div class="main-content">
+            <div class="event-det common-cls">
                 <div class="container">
-                   <div class="eve-det-img">
-                      <img src="{{adminEventImage}}{{eventDetail.id}}/{{eventDetail.logo}}">
-                   </div>
-                   <div class="eve-det-cont">
-                      <div class="event-det-1">
-                         <p>Vanaf : 
-                             
-                             <span ng-if="getDate(eventDetail.event_date)">{{eventDate}} {{eventMonth}}</span>
-                           
-                            </p>                         
-                         <p>{{eventDetail.address}}</p>
-                      </div>
-                      <div class="event-det-2">
-                         <p>T : {{eventDetail.phone}}</p>
-                         <a href="#">E : {{eventDetail.email}}</a>
-                      </div>
-                      <div class="social-icon">
-                         <ul>
-                            <li class="fb"><a href="#">fb</a></li>
-                            <li class="twit"><a href="#">twit</a></li>
-                         </ul>
-                      </div>
-                   </div>
+                    <p></p>
+                    <div class="eve-det-img">
+                        <img src="{{adminEventImage}}{{eventDetail.id}}/{{eventDetail.logo}}">
+                    </div>
+                    <div class="eve-det-cont">
+                        <div class="event-det-1">
+                            <p>Vanaf :
+
+                                <span ng-if="getDate(eventDetail.event_date)">{{eventDate}} {{eventMonth}}</span>
+
+                            </p>
+                            <p>{{eventDetail.address}}</p>
+                        </div>
+                        <div class="event-det-2">
+                            <p>T : {{eventDetail.phone}}</p>
+                            <a href="#">E : {{eventDetail.email}}</a>
+                        </div>
+                        <div class="social-icon">
+                            <ul>
+                                <li class="fb">
+                                    <a href="#">fb</a>
+                                </li>
+                                <li class="twit">
+                                    <a href="#">twit</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="event-det-bot" >
-                   <div class="container" >
-                      <ul >
-                         <!-- <li><a href="#" ng-bind-html="eventDetail.information"></a></li> -->
-                         <li><a ui-sref="app.tabinfo({info:eventDetail.information})">info</a></li>
-                         <li ng-repeat="eventClass in eventClass_values"><a ui-sref="app.eventclass({ eventId:eventId , classId:eventClass.id , className: eventClass.class_name})">{{eventClass.class_name}}</a></li>
-                         
-                      </ul>
-                   </div>
+                <div class="event-det-bot">
+                    <div class="container">
+                        <ul>
+                            <!-- <li><a href="#" ng-bind-html="eventDetail.information"></a></li> -->
+                            <li>
+                                <a ui-sref="app.tabinfo({info:eventDetail.information})">info</a>
+                            </li>
+                            <li ng-repeat="eventClass in eventClass_values">
+                                    <a ui-sref="app.eventclass({ eventId:eventId , classId:eventClass.id , className: eventClass.class_name})">{{eventClass.class_name}}</a>
+                                </li>
+
+                        </ul>
+                    </div>
                 </div>
-             </div>
-          </div>
-       </ion-content>
+            </div>
+        </div>
+    </ion-content>
     <!-- </div> -->
- </ion-view> 
-
-
+</ion-view>

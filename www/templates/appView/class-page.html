@@ -1,31 +1,36 @@
 <ion-view class="pane" view-title={{className}}>
     <!-- <div class="inner-page class">       -->
     <ion-nav-buttons side="left">
-        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+        <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-click="hideToastMessage();"></button>
     </ion-nav-buttons>
     <div class="next-page">
-        <button id="back" value="" type="button" ng-click="goBack()"></button>
+        <button id="back" value="" type="button" ng-click="goBack();hideToastMessage();"></button>
     </div>
     <ion-content>
         <div class="main-content">
             <div class="class-page common-cls">
                 <div class="push-notify">
-                    <div class="push-blk">
+                    <div class="push-blk" ng-init="initStatus();">
                         <h3>Push Notifications</h3>
-                        <label class="switch_toggle" onclick="">
-                            <span>
-                                <span class="active">ja</span>
-                                <span>nee</span>
+                        <div class="switch_toggle" ng-click="ShowHide()"  >
+                            <span ng-show="switchOn" >
+                                <span class="active">nee</span>
+                                <span>ja</span>
                             </span>
-                            <a class="btn btn-primary"></a>
-                        </label>
+                            <span ng-show="switchOff">
+                                    <span class="active">ja</span>
+                                    <span>nee</span>
+                                </span>
+                        </div>
                     </div>
                     <div class="container">
                         <ul>
                             <li ng-repeat="eventClass in eventClass_values">
                                 <a href="" ng-click="getClassTabDetail(eventClass.id, eventClass.title, eventClass.name)">
-                                    <div ng-if="getClassName(eventClass.name)">
+                                    <div ng-if="getClassName(eventClass.name);">
                                         {{eventClass.name}}
+                                    </div>
+                                    <div >                                            
                                     </div>
                                 </a>
                             </li>
