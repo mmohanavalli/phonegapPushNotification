@@ -1,10 +1,10 @@
 <ion-view class="pane" view-title="News detail">
     <!-- <div class="inner-page news-detail"> -->
     <ion-nav-buttons side="left">
-        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+        <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-click="hideToastMessage();"></button>
     </ion-nav-buttons>
     <div class="next-page">
-        <button id="back" value="" type="button" ng-click="goBack()"></button>
+        <button id="back" value="" type="button" ng-click="goTo()"></button>
     </div>
     <ion-content>
         <div class="main-content">

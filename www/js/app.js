@@ -1,19 +1,4 @@
-﻿var socialShare = {};
-var push = {};
-var googleanalyticsid = 'UA-12341234-1';
-function addanalytics(screen) {
-	if (window.analytics) {
-		window.analytics.startTrackerWithId(googleanalyticsid);
-		if (screen) {
-			window.analytics.trackView(screen);
-			window.analytics.trackEvent("Page Load", screen, screen, 1);
-		} else {
-			window.analytics.setUserId(user.id);
-			window.analytics.trackEvent("User ID Tracking", "User ID Tracking", "Userid", user.id);
-		}
-	}
-}
-angular.module('starter', ['ionic', 'starter.controllers','ngCordova','angularMoment','ngToast']).run(function ($ionicPlatform, MyServices, CommonServices, $cordovaLocalNotification, amMoment) {
+﻿angular.module('starter', ['ionic', 'starter.controllers','ngCordova','angularMoment']).run(function ($ionicPlatform, MyServices, CommonServices, $cordovaLocalNotification, amMoment) {
 
 
 	$ionicPlatform.ready(function () {
@@ -42,13 +27,7 @@ angular.module('starter', ['ionic', 'starter.controllers','ngCordova','angularMo
 				abstract: true,
 				templateUrl: 'templates/menu.html',
 				controller: 'AppCtrl'
-			})
-			.state('access', {
-				url: '/access',
-				abstract: true,
-				templateUrl: 'templates/access.html',
-				controller: 'AccessCtrl'
-			})
+			})		
 			.state('app.dashboard', {
 				url: '/dashboard',
 				views: {
@@ -174,6 +153,15 @@ angular.module('starter', ['ionic', 'starter.controllers','ngCordova','angularMo
 					'menuContent': {
 						templateUrl: 'templates/appView/splash.html',
 						controller: "SplashCtrl"
+					}
+				}
+			})
+			.state('app.offline', {
+				url: '/offline',
+				views: {
+					'menuContent': {
+						templateUrl: 'templates/offline.html',
+						controller: "OfflineCtrl"
 					}
 				}
 			})

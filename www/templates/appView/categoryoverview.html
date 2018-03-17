@@ -1,78 +1,45 @@
-<ion-view class="pane" view-title="Event Selection">
-    <div class="inner-page events">
-        <header>
-            <div class="container">
-                <div class="side-menu">
-                    <a href="#">
-                        <img src="img/menu.png">
-                    </a>
-                    <div class="left-side-menu" style="display:none;">
-                        <div class="side-menu-content">
-                            <div class="menu-blk">
-                                <h2>Menu</h2>
-                                <a href="#" class="togg">X</a>
-                            </div>
-                            <ul class="menu-item">
-                                <li class="menu-1 active">
-                                    <a href="#">Home</a>
-                                </li>
-                                <li class="menu-2">
-                                    <a href="#">EVENEMENTEN</a>
-                                </li>
-                                <li class="menu-3">
-                                    <a href="#">Categorieen</a>
-                                </li>
-                                <li class="menu-4">
-                                    <a href="#">informatie</a>
-                                </li>
-                                <li class="menu-5">
-                                    <a href="#">Push berichten</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+<ion-view class="pane" view-title="Categorieen">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-click="hideToastMessage();"></button>
+    </ion-nav-buttons>
+    <div class="next-page">
+        <button id="back" value="" type="button" ng-click="goTo()"></button>
+    </div>
+    <ion-content>
+        <div class="main-content" >
+            <div class="event-sel common-cls">
+                <div class="text">
+                    <p>Op deze pagina vindt u evenementen welke door de desbetreffende clubs zelf worden gevuld met de laatste
+                        en actuele infornmatie.</p>
                 </div>
-                <div class="page-title">
-                    <h1>CAtegory Overview</h1>
-                </div>
-                <div class="next-page">
-                    <button id="back" value="" type="button"></button>
-                </div>
-            </div>
-        </header>
-        <ion-content>
-            <div class="main-content" ng-click="getUpcomingCategory();" ng-init="clearSearchContent();">
-                <div class="event-sel common-cls">
-                    <div class="text">
-                        <p>Op deze pagina vindt u evenementen welke door de desbetreffende clubs zelf worden gevuld met de laatste
-                            en actuele infornmatie.</p>
-                    </div>
-                    <div class="tabs-blk-container">
-                        <ul class="tab">
-                            <li class="tab-link current" data-tab="tab-1" ng-click="getUpcomingCategory();clearSearchContent();">ACTUELE EVENEMENTEN</li>
-                            <li class="tab-link" data-tab="tab-2" ng-click="getCompletedCategory();clearSearchContent();" >EVENEMENTEN VERLEDEN</li>
-                        </ul>
-                        <div id="tab-1" class="tab-content current" ng-repeat="upcomingOverview in categoryUpcomingOverview_values" ng-show="upcomingEvents">
-                            <div class="container">
-                                <div class="tab-blk">
-                                    <div class="tab-left">
-                                        <span>
-                                            {{ upcomingOverview.event_date | date : "dd" }}
-                                            <div ng-if="getDate(upcomingOverview.event_date)">
-                                                <p>{{eventMonth}} {{eventYear}}</p>
-                                            </div>
-                                        </span>
-                                    </div>
-                                    <div class="tab-ryt">
-                                        <h3>{{upcomingOverview.title}}
-                                            <span ng-if="getAddress(upcomingOverview.address)">({{countryAddress}})</span>
-                                        </h3>
-                                        <p ng-bind-html="upcomingOverview.description"></p>
-                                    </div>
+                <div class="tabs-blk-container">
+                    <ul class="tab">
+                        <li class={{tabUpcomingLink}} data-tab="tab-1" ng-click="getUpcomingCategory();">ACTUELE EVENEMENTEN</li>
+                        <li class={{tabCompletedLink}} data-tab="tab-2" ng-click="getCompletedCategory();">EVENEMENTEN VERLEDEN</li>                       
+                    </ul>
+                    <div id="tab-1" class="tab-content current" ng-show="upcomingEvents">
+                        <div class="container">
+                            <!-- upcomingEventsCategory -->
+                            <div class="tab-blk" ng-repeat="upcomingOverview in categoryUpcomingOverview_values">
+                                <div class="tab-left">
+                                    <span>
+                                        {{ upcomingOverview.event_date | date : "dd" }}
+                                        <div ng-if="getDate(upcomingOverview.event_date)">
+                                            <p>{{eventMonth}} {{eventYear}}</p>
+                                        </div>
+                                    </span>
+                                </div>
+                                <div class="tab-ryt">
+                                    <h3>{{upcomingOverview.title}}
+                                        <span ng-if="getAddress(upcomingOverview.address)">({{countryAddress}})</span>
+                                    </h3>
+                                    <p ng-bind-html="upcomingOverview.description"></p>
                                 </div>
                             </div>
                         </div>
-                        <div id="tab-1" class="tab-content current" ng-repeat="upcomingSearch in upcomingSearchEvents_values" ng-show="upcomingEventsSearchList">
+                    </div>
+
+                    <!-- <div id="tab-1" class="tab-content current" ng-repeat="upcomingSearch in upcomingSearchEvents_values" ng-show="upcomingEventsSearchList">
                             <div class="container">
                                 <div class="tab-blk">
                                     <div class="tab-left">
@@ -91,9 +58,9 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <div id="tab-2" class="tab-content current" ng-repeat="completedOverview in categoryCompletedOverview_values" ng-show="completedEvents">
+                    <!-- <div id="tab-2" class="tab-content current" ng-repeat="completedOverview in categoryCompletedOverview_values" ng-show="completedEvents">
                             <div class="container">
                                 <div class="tab-blk">
                                     <div class="tab-left">
@@ -112,8 +79,31 @@
                                     </div>
                                 </div>
                             </div>
+                        </div> -->
+
+                    <div id="tab-2" class="tab-content current" ng-show="completedEvents">
+                        <div class="container">
+                            <!-- completedEventss category       -->
+                            <div class="tab-blk" ng-repeat="completedOverview in categoryCompletedOverview_values">
+                                <div class="tab-left">
+                                    <span>
+                                        {{ completedOverview.event_date | date : "dd" }}
+                                        <div ng-if="getDate(completedOverview.event_date)">
+                                            <p>{{eventMonth}} {{eventYear}}</p>
+                                        </div>
+                                    </span>
+                                </div>
+                                <div class="tab-ryt">
+                                    <h3>{{completedOverview.title}}
+                                        <span ng-if="getAddress(completedOverview.address)">({{countryAddress}})</span>
+                                    </h3>
+                                    <p ng-bind-html="completedOverview.description"></p>
+                                </div>
+                            </div>
                         </div>
-                        <div id="tab-2" class="tab-content current" ng-repeat="completedSearch in completedSearchEvents_values" ng-show="completedEventsSearchList">
+                    </div>
+
+                    <!-- <div id="tab-2" class="tab-content current" ng-repeat="completedSearch in completedSearchEvents_values" ng-show="completedEventsSearchList">
                             <div class="container">
                                 <div class="tab-blk">
                                     <div class="tab-left">
@@ -133,55 +123,40 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div id="tab-2" class="tab-content current" ng-show="noSearchData">
-                            <div class="container">
-                                <div class="tab-blk">
-                                    <div class="tab-ryt">
-                                        <p>No results found</p>
-                                    </div>
-                                </div>
+                        </div> -->
+
+                </div>
+                <div class="tab-content current" ng-show="noData">
+                    <div class="container">
+                        <!-- No Results -->
+                        <div class="tab-blk">
+                            <div class="tab-ryt">
+                                <p>Sorry, er zijn geen aankomende evenementen op dit moment.</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="event-sel-blk" ng-show="searchEventTab1">
-                        <div class="container">
-                            <form>
-                                <div class="form-group">
-                                    <label>Filter</label>
-                                    <datepicker class="form-datepicker" date-format="dd/MM/yyyy" date-typer="true">
-                                        <input class="form-control" type="text" name="date" ng-model="search.date" placeholder="- Op datum -">
-                                    </datepicker>
-                                </div>
-                                <div class="form-group">
-                                    <label>Zoeken</label>
-                                    <input type="text" id="Zoeken" placeholder="Zoeken" ng-model="search.content">
-                                </div>
 
-                                <button type="submit" class="submit" ng-click="searchEventSelectionTab1(search);">Zoeken</button>
-
-                            </form>
-                        </div>
-                    </div>
-                    <div class="event-sel-blk" ng-show="searchEventTab2">
-                        <div class="container">
-                            <form>
-                                <div class="form-group">
-                                    <label>Filter</label>
-                                    <datepicker class="form-datepicker" date-format="dd/MM/yyyy" date-typer="true">
-                                        <input class="form-control" type="text" name="date" ng-model="search.date" placeholder="- Op datum -">
-                                    </datepicker>
-                                </div>
-                                <div class="form-group">
-                                    <label>Zoeken</label>
-                                    <input type="text" id="Zoeken" placeholder="Zoeken" ng-model="search.content">
-                                </div>
-                                <button type="submit" class="submit" ng-click="searchEventSelectionTab2(search);">Zoeken</button>
-                            </form>
-                        </div>
                     </div>
                 </div>
+                <div class="event-sel-blk">
+                    <div class="container">
+                        <form>
+                            <div class="form-group">
+                                <label>Filter</label>
+                                <datepicker class="form-datepicker" date-format="dd/MM/yyyy" date-typer="true">
+                                    <input class="form-control" type="text" name="date" ng-model="search.date" placeholder="- Op datum -">
+                                </datepicker>
+                            </div>
+                            <div class="form-group">
+                                <label>Zoeken</label>
+                                <input type="text" id="Zoeken" placeholder="Zoeken" ng-model="search.content">
+                            </div>
+                            <button type="submit" id="tab1" class="submit" ng-click="searchEventSelectionTab(search , $event);" ng-show="searchEventTab1">Zoeken</button>
+                            <button type="submit" id="tab2" class="submit" ng-click="searchEventSelectionTab(search, $event);" ng-show="searchEventTab2">Zoeken</button>
+                        </form>
+                    </div>
+                </div>
+
             </div>
-        </ion-content>
-    </div>
+        </div>
+    </ion-content>
 </ion-view>
